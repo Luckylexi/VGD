@@ -52,7 +52,7 @@ class Game:
         pygame.init()
         self._display_surf = pygame.display.set_mode((1366,768), pygame.HWSURFACE)
         self._running = True
-        cwd = os.getcwd() + "\\Pygamescode"
+        cwd = os.getcwd()
         self._image_surf = pygame.image.load(os.path.join(cwd, 'ascensionopenscreen.png')).convert_alpha()
         self._image_surf = pygame.transform.scale(self._image_surf, (1360,760))
     def on_event(self, event):
