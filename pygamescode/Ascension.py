@@ -13,12 +13,7 @@ class Mountain:
         self.difficulty = difficultyoverall
         self.routeLength = routelength
         self.diff = difficulties
-    def on_init (self):
-        percent = []
-        for x in self.diff:
-            percent.append((self.diff[x] * self.difficulty))
 
-        return percent
 
 class level:
     def __init__(self, name):
@@ -31,13 +26,18 @@ class level:
             with open(os.path.join(cwd, "mountains.txt"), "r") as f:
                 array = []
                 for line in f:
-                    array.append(line.rstrip('\n'))
+                    array.append(line.rstrip('\n'))       
         except:
-            "Could not load the level"
-        
+           print( "Could not load the level" )
         for i in array:
-            info = (array[i].split(", "))
-            mount = Mountain(info[0], info[1], info[2], info[3], info[4])
+            info = (i.split(";"))
+            name = info[0]
+            height = info[1]
+            difficulty = info[2]
+            routelen = info[3]
+            diffs = info[4]
+            #diffs = [ x[0] for x in info[4]]
+            mount = Mountain(name, height, difficulty, routelen, diffs)
             self.mounts.append(mount)
             
 
@@ -55,6 +55,9 @@ class Game:
         cwd = os.getcwd()
         self._image_surf = pygame.image.load(os.path.join(cwd, 'ascensionopenscreen.png')).convert_alpha()
         self._image_surf = pygame.transform.scale(self._image_surf, (1360,760))
+        beginner = level("beginning")
+        beginner.on_init();
+
     def on_event(self, event):
         if event.type == QUIT:
             self._running = False
