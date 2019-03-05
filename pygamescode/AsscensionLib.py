@@ -64,13 +64,11 @@ class climber:
         self.name = array[0]
         self.mountsClimbed = array[1]
         self.totalmetersclimbed = array[2]
-        del array[0]
-        del array[1]
-        del array[2]
-        for i in array:
-            path = displaylib.getpath("../Assets", i)
-            nImage = displaylib.image(path)
-            self.images.append(nImage)
+        if (array != None):
+            for i in array:
+                path = displaylib.getpath("../Assets", i)
+                nImage = displaylib.image(path)
+                self.images.append(nImage)
     
     def getPosition(self):
         return self.position
@@ -89,7 +87,7 @@ class level:
     def on_init(self):
         try:
             levelList = []
-            path = getpath("../assets","mountains.txt")
+            path = displaylib.getpath("../assets","mountains.txt")
             with open(path, "r") as f:
                 for line in f:
                     levelList.append(line.rstrip('\n'))       
@@ -126,12 +124,14 @@ class level:
         self.newchar.setPosition(0)
         ev = eventhandle.CEvent()
         while(True):
+
             if(self.newchar.position == levelMount.routeLength):
                 self.success(levelMount)
                 break
             else:
                 for event in pygame.event.get():
                    i = ev.on_event(event, self.newchar)
+                   
                    if(i != None): 
                        f = fall(self.newchar, levelMount, i)
                        if(f > levelMount.getRouteLength()): self.death()

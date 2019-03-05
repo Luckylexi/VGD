@@ -17,18 +17,17 @@ class Game:
         self.newImage = displaylib.image(path)
         self.newImage._image_surf = pygame.transform.scale(self.newImage._image_surf, (1360,760))
         self.beginner = AsscensionLib.level("beginning")
-        self.beginner.on_init()
- 
+        
+
     def on_cleanup(self):
         pygame.quit()
  
     def on_execute(self):
         if self.on_init() == False:
             self._running = False
- 
+        self.beginner.on_init()
+
         while( self._running ):
-            for event in pygame.event.get():
-                self.ev.on_event(event,self.beginner.newchar)
             self.beginner.run_level(0)
         self.on_cleanup()
 

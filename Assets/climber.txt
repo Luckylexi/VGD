@@ -1,3 +1,5 @@
 Bibbely Bob Jones
 0
 0
+rightfoot.png
+leftfoot.png
