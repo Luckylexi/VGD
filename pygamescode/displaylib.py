@@ -1,6 +1,7 @@
 import  os, sys, pygame
 from pygame.locals import *
 
+
 def getpath(path,filename):
     if(path != None):
         os.chdir(path)

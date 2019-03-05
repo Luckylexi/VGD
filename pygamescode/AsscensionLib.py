@@ -1,5 +1,5 @@
 import  os, sys, pygame, random
-import eventhandle, displaylib
+import eventhandle, displaylib, Asscension
 from pygame.locals import *
 
 def fall(char,mount,chance):
@@ -23,11 +23,12 @@ class Mountain:
         self.images = []
     def on_init(self):
         try:
-            path  = getpath("../Assets",("mountain" + name.rstrip(' ') + ".txt"))
+            fName = self.name.replace(" ", "")
+            path  = displaylib.getpath("../Assets",(fName + ".txt"))
             with open(path, "r") as f:
                 for line in f:
-                    path = getpath("../Assets", line)
-                    nwIm = image(path)
+                    path = displaylib.getpath("../Assets", line)
+                    nwIm = displaylib.image(path)
                     self.images.append(nwIm)
         except:
             print( "Could not load the mountain images" )
@@ -102,10 +103,11 @@ class level:
             diffs = info[4].rstrip('\n')
             #diffs = [ x[0] for x in info[4]]
             mount = Mountain(name, height, difficulty, routelen, diffs)
+            mount.on_init()
             self.mounts.append(mount)
     
     def success(self, mount):
-        win_surf = None
+        win_surf = pygame.display.set_mode((1366,768), pygame.HWSURFACE)
         path = displaylib.getpath("../Assets", "success.png")
         winim = displaylib.image(path)
         mounttext = displaylib.font(24, mount.name, (255,255,255), True)
@@ -114,7 +116,7 @@ class level:
         pygame.display.flip()
 
     def death(self):
-        death_surf = None
+        death_surf = pygame.display.set_mode((1366,768), pygame.HWSURFACE)
         deathtext = displaylib.font(36, "You have died", (255,255,255), False)
         death_surf.blit(deathtext.text_surf, deathtext.f.size)
         pygame.display.flip()
@@ -123,16 +125,24 @@ class level:
         levelMount = self.mounts[select]
         self.newchar.setPosition(0)
         ev = eventhandle.CEvent()
+        walkswitch = 0
         while(True):
-
             if(self.newchar.position == levelMount.routeLength):
                 self.success(levelMount)
                 break
             else:
+                Asscension.blit(levelMount.images[0])
                 for event in pygame.event.get():
-                   i = ev.on_event(event, self.newchar)
-                   
-                   if(i != None): 
+                    if(walkswitch == 0):
+                       walkswitch = 1
+                    elif(walkswitch == 1):
+                        walkswitch = 0
+                    else:
+                       walkswitch = 0
+                    i = ev.on_event(event, self.newchar)
+                    level_surf.blit(self.newchar.images[walkswitch]._image_surf, self.newchar.images[walkswitch].f.size)
+                    pygame.display.flip()
+                    if(i != None): 
                        f = fall(self.newchar, levelMount, i)
                        if(f > levelMount.getRouteLength()): self.death()
                        else: self.newchar.setPosition(self.newchar.position - f)
