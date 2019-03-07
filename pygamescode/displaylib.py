@@ -14,13 +14,24 @@ class image:
         self.fileName = fileName
         self._image_surf = None
         try:
-            self._image_surf = pygame.image.load(fileName).convert_alpha()
+            self._image_surf = pygame.image.load(self.fileName).convert_alpha()
+            #if(scalew != None and scaleh != None):
+                #self._image_surf = pygame.transform.smoothscale(self._image_surf, (scalew,scaleh))
         except:
+            print(pygame.get_error())
             print("Could not load image")
+    def w(self):
+        w = self._image_surf.get_width()
+        return w
+    def h(self):
+        return self._image_surf.get_height()
 
 class font:
     def __init__(self, size, textline, color, underline):
-        self.file = getpath("../Assets","FredricktheGreat-Regular.tff")
-        self.f = pygame.font.Font(self.file, size)
+        self.file = getpath("../Assets","FrederickatheGreat-Regular.ttf")
+        try:
+            self.f = pygame.font.Font(self.file, size)
+        except:
+            print("Could not load font " + self.file + " " + pygame.get_error())
         self.f.set_underline(underline)
         self.text_surf = self.f.render(textline, True, color)
