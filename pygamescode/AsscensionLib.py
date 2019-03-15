@@ -29,9 +29,9 @@ def fall(char,mount,chance):
     if (fChance != None):
         if(chance < ((fChance/2) * 100)):
             if(stepDiff*5 == 1):
-                return 13000
+                return 0
             if(stepDiff*5 == 2):
-                return random.randint(1, int(mount.routeLength))
+                return random.randint(1, int(mount.routeLength/250))
             elif(stepDiff*5 == 3):
                 return random.randint(1, int(2 * mount.routeLength/100))
             elif(stepDiff*5 == 4):
