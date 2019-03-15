@@ -29,9 +29,9 @@ def fall(char,mount,chance):
     if (fChance != None):
         if(chance < ((fChance/2) * 100)):
             if(stepDiff*5 == 1):
-                return 0
+                return 13000
             if(stepDiff*5 == 2):
-                return random.randint(1, int(mount.routeLength/100))
+                return random.randint(1, int(mount.routeLength))
             elif(stepDiff*5 == 3):
                 return random.randint(1, int(2 * mount.routeLength/100))
             elif(stepDiff*5 == 4):
@@ -88,10 +88,11 @@ class climber:
         self.totalmetersclimbed = 0
 
     def on_init(self):
+        array = []
         try:
             path = displaylib.getpath("../Assets",self.fileName)
             with open(os.path.join(path), "r") as f:
-                array = []
+                
                 for line in f:
                     array.append(line.rstrip('\n'))
         except:

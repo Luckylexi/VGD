@@ -4,8 +4,11 @@ from pygame.locals import *
 
 def getpath(path,filename):
     if(path != None):
-        os.chdir(path)
-        return os.path.join(os.getcwd(), filename)
+        try:
+            os.chdir(path)
+            return os.path.join(os.getcwd(), filename)
+        except OSError as err:
+            print("OS error: {0}".format(err))
     else:
         return os.path.join(os.getcwd(), filename)
 
