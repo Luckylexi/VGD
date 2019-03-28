@@ -193,8 +193,10 @@ class level:
             if(self.newchar.position >= self.levelMount.routeLength):
                 self.success(self.levelMount)
                 self.newchar.mountsClimbed += 1
-                pygame.time.wait(3000)
-                break
+                self.newchar.setHealth(100)
+                self.newchar.setPosition(0)
+                for event in pygame.event.get():
+                    ev.on_event(event, self.game, self.newchar, self)
             else:
                 for event in pygame.event.get():   
                     i = ev.on_event(event, self.game, self.newchar, self)
@@ -204,10 +206,12 @@ class level:
                        f = fall(self.newchar, self.levelMount, i)
                        if((self.newchar.health - f) <= 0): 
                            self.dead = self.death()
+                           break
                        else: 
                            self.newchar.setHealth(self.newchar.health-f)
                            f = (((f/100) * random.randint(f,int(self.newchar.position))))
                            self.newchar.setPosition(self.newchar.position - f)
+                           break
                 if(self.dead == True):
                     break
                 if(f != None):

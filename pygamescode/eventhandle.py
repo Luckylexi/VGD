@@ -21,12 +21,14 @@ class CEvent:
                     level.walkswitch = 0
                 else:
                     level.walkswitch = 0
-                char.setPosition((char.getPosition()+(level.levelMount.routeLength/75)))
+                char.setPosition((char.getPosition()+(level.levelMount.routeLength/10)))
                 return random.randint(0,100)
         elif event.key == pygame.K_RETURN:
             if(level != None):
                 if(level.dead == True):
                     level.dead = False
+                    game.on_render()
+                else:
                     game.on_render()
             else:
                 print ("got here")
