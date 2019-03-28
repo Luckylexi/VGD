@@ -1,5 +1,5 @@
 import  os, sys, pygame, random
-import eventhandle, displaylib, Asscension
+import eventhandle, displaylib, Ascension
 from pygame.locals import *
 
 def fall(char,mount,chance):
@@ -21,25 +21,21 @@ def fall(char,mount,chance):
             stepDiff = e[f-1]/5
             fChance = (float(mount.difficulty) + stepDiff) / 2
             break
+        else: fChance = 0
         try:
             f+= 2
             e[f]
         except:
             break
-    if (fChance != None):
-        if(chance < ((fChance/2) * 100)):
-            if(stepDiff*5 == 1):
-                return 0
-            if(stepDiff*5 == 2):
-                return random.randint(1, int(mount.routeLength/250))
-            elif(stepDiff*5 == 3):
-                return random.randint(1, int(2 * mount.routeLength/100))
-            elif(stepDiff*5 == 4):
-                return random.randint(1, int(3 * mount.routeLength/100))
-            elif(stepDiff*5 == 5):
-                return random.randint(1, int(4 * mount.routeLength))
+    if(chance <= ((fChance*100)/2)):
+        if(stepDiff*5 == 1): return 0
+        elif(stepDiff*5 == 2): return (random.randint(0,3))
+        elif(stepDiff*5 == 3): return (random.randint(0,9))
+        elif(stepDiff*5 == 4): return (random.randint(0,27))
+        elif(stepDiff*5 == 5): return (random.randint(0,33))
         else: return 0
-    else: return 0
+    else:
+        return 0
 
 class Mountain:
     def __init__(self, name, height, difficultyoverall, routelength, difficulties):
@@ -206,9 +202,12 @@ class level:
                         break
                     if(i != None): 
                        f = fall(self.newchar, self.levelMount, i)
-                       if(f > self.newchar.position): 
+                       if((self.newchar.health - f) <= 0): 
                            self.dead = self.death()
-                       else: self.newchar.setPosition(self.newchar.position - f)
+                       else: 
+                           self.newchar.setHealth(self.newchar.health-f)
+                           f = (((f/100) * random.randint(f,int(self.newchar.position))))
+                           self.newchar.setPosition(self.newchar.position - f)
                 if(self.dead == True):
                     break
                 if(f != None):
