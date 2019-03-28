@@ -70,13 +70,9 @@ class Mountain:
         return self.height
     def getRouteLength(self):
         return self.routeLength
-
-class smallScreen:
-    def __init__(self, mount):
-        self.mountain = mount
-        self.imageMap = None
-    def on_init(self):
-        self.imageMap = self.mountain.images[0]
+    
+    def researchIncrement(self):
+        return 1 * self.difficulty
         
 class climber:
     def __init__(self, file):
@@ -86,6 +82,7 @@ class climber:
         self.position = None
         self.mountsClimbed = 0
         self.totalmetersclimbed = 0
+        self.health = 100
 
     def on_init(self):
         array = []
@@ -112,8 +109,20 @@ class climber:
 
     def setPosition(self, pos):
         self.position = float(pos)
-
     
+    def getHealth(self):
+        return self.health
+    
+    def setHealth(self, health):
+        self.health = health
+
+class smallScreen:
+    def __init__(self, mount):
+        self.mountain = mount
+        self.imageMap = None
+    def on_init(self):
+        self.imageMap = self.mountain.images[0]
+
 class level:
     def __init__(self, name):
         self.name = name
@@ -123,7 +132,7 @@ class level:
         self.dead = False
         self.win = False
         self.game = None
-
+        self.resear = []
     
     def on_init(self,game):
         self.game = game
@@ -146,6 +155,7 @@ class level:
             mount = Mountain(name, height, difficulty, routelen, diffs)
             mount.on_init(game)
             self.mounts.append(mount)
+            self.resear.append(0)
     
     def success(self, mount):
         path = displaylib.getpath("../Assets", "success.png")
@@ -157,7 +167,6 @@ class level:
         self.game._display_surf.blit(routetext.text_surf,((self.game.windowSize[0]/2 - routetext.text_surf.get_width()),self.game.windowSize[1]/2 + 30))
         pygame.display.flip()
 
-
     def death(self):
         self.newchar.position = 0
         deathtext = displaylib.font(36, "You have died", (255,255,255), False)
@@ -165,6 +174,9 @@ class level:
         self.game._display_surf.blit(deathtext.text_surf, (self.game.windowSize[0]/2, self.game.windowSize[1]/2))
         pygame.display.flip()
         return True
+
+    def research(self):
+        pass
 
     def run_level(self, select):
         self.levelMount = self.mounts[select]
