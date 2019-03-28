@@ -1,6 +1,7 @@
-import  os, sys, pygame, random
+import pygame_sdl2
+import  os, sys, random
 import AsscensionLib, displaylib, eventhandle
-from pygame.locals import *
+pygame_sdl2.import_as_pygame()
 
 class Game:
     def __init__(self):
