@@ -1,7 +1,7 @@
 import pygame, random
-import AsscensionLib, Ascension
+import AscensionLib, Ascension
 
-from AsscensionLib import *
+from AscensionLib import *
 from pygame.locals import *
 
 class CEvent:
@@ -30,7 +30,7 @@ class CEvent:
                     game.on_render()
             else:
                 print ("got here")
-                self.beginner = AsscensionLib.level("beginning")
+                self.beginner = AscensionLib.level("beginning")
                 self.beginner.on_init(game)
                 self.beginner.run_level(0)
     def on_key_up(self, event):
@@ -60,23 +60,23 @@ class CEvent:
     def on_event(self, event, game, char, level):
         if event.type == QUIT:
             self.on_exit(game, level)
- 
+
         elif event.type >= USEREVENT:
             self.on_user(event)
- 
+
         elif event.type == VIDEOEXPOSE:
             self.on_expose()
- 
+
         elif event.type == VIDEORESIZE:
             self.on_resize(event, level, game)
- 
+
         elif event.type == KEYUP:
             self.on_key_up(event)
- 
+
         elif event.type == KEYDOWN:
           i = self.on_key_down(event, game, char, level)
           return i
-  
+
         elif event.type == ACTIVEEVENT:
             if event.state == 1:
                 if event.gain:
