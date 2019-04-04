@@ -180,26 +180,34 @@ class level:
     def levelSelect(self):
         pass
 
-    def success(self, mount):
+    def success(self, ev, mount):
         self.play = False
-        self.game._display_surf.fill([0,0,0])
-        pygame.display.flip()
+        self.win = True
+        self.newchar.mountsClimbed += 1
+        self.newchar.setHealth(100)
+        self.newchar.setPosition(0)
         path = displaylib.getpath("../Assets", "success.png")
         winim = displaylib.image(path)
         mounttext = displaylib.font(24, mount.name, (255, 255, 255), True)
         routetext = displaylib.font(
             20, "You climbed: " + str(mount.routeLength) + " m", (255, 255, 255), False)
-        self.game._display_surf.fill([0, 0, 0])
-        self.game._display_surf.blit(mounttext.text_surf, ((
-            self.game.windowSize[0]/2 - mounttext.text_surf.get_width()), self.game.windowSize[1]/2))
-        self.game._display_surf.blit(routetext.text_surf, ((
-            self.game.windowSize[0]/2 - routetext.text_surf.get_width()), self.game.windowSize[1]/2 + 30))
-        pygame.display.flip()
+            
+        while (True):
+            for event in pygame.event.get():
+                ev.on_event(event, self.game, self.newchar, self)
+                self.game._display_surf.fill([0, 0, 0])
+                self.game._display_surf.blit(mounttext.text_surf, ((
+                    self.game.windowSize[0]/2 - mounttext.text_surf.get_width()), self.game.windowSize[1]/2))
+                self.game._display_surf.blit(routetext.text_surf, ((
+                    self.game.windowSize[0]/2 - routetext.text_surf.get_width()), self.game.windowSize[1]/2 + 30))
+                pygame.display.update()
+            if(self.game.onHomeScreen == True):
+                    break
 
     def death(self):
         self.play = False
         self.newchar.position = 0
-        self.game._display_surf.fill([0,0,0])
+        self.game._display_surf.fill([0, 0, 0])
         pygame.display.flip()
         deathtext = displaylib.font(
             36, "You have died", (255, 255, 255), False)
@@ -207,24 +215,25 @@ class level:
         self.game._display_surf.blit(
             deathtext.text_surf, (self.game.windowSize[0]/2, self.game.windowSize[1]/2))
         pygame.display.flip()
-        return True
+        self.dead = True
 
     def research(self):
         pass
 
     def levelRender(self):
-            self.game._display_surf.fill([0,0,0])
-            self.game._display_surf.blit(self.levelMount.images[0]._image_surf, (int(
-                self.game.windowSize[0]/2 - self.levelMount.images[0].w()/2), 0))
-            posText = displaylib.font(
-                20, ("Position: {0:.2f} m".format(self.newchar.position)), [255, 255, 255], False)
-            self.game._display_surf.blit(posText.text_surf, ((
-                self.game.windowSize[0] - self.levelMount.images[0].w()), 0))
+        self.game._display_surf.fill([0, 0, 0])
+        self.game._display_surf.blit(self.levelMount.images[0]._image_surf, (int(
+            self.game.windowSize[0]/2 - self.levelMount.images[0].w()/2), 0))
+        posText = displaylib.font(
+            20, ("Position: {0:.2f} m".format(self.newchar.position)), [255, 255, 255], False)
+        self.game._display_surf.blit(posText.text_surf, ((
+            self.game.windowSize[0] - self.levelMount.images[0].w()), 0))
 
-            self.game._display_surf.blit(self.newchar.images[self.walkswitch]._image_surf, (
-                self.game.windowSize[0]/2 - (self.levelMount.images[0].w()/4), 2*self.game.windowSize[1]/3))
+        self.game._display_surf.blit(self.newchar.images[self.walkswitch]._image_surf, (
+            self.game.windowSize[0]/2 - (self.levelMount.images[0].w()/4), 2*self.game.windowSize[1]/3))
 
     def run_level(self, select):
+        self.game.onHomeScreen = False
         self.play = True
         self.levelMount = self.mounts[select]
         self.newchar.setPosition(0)
@@ -238,31 +247,32 @@ class level:
                 self.levelRender()
 
                 if(self.newchar.position >= self.levelMount.routeLength):
-                    self.success(self.levelMount)
-                    self.newchar.mountsClimbed += 1
-                    self.newchar.setHealth(100)
-                    self.newchar.setPosition(0)
+                    self.success(ev, self.levelMount)
+                    break
                 else:
                     for event in pygame.event.get():
                         i = ev.on_event(event, self.game, self.newchar, self)
                         if(self.dead == True):
                             break
                         if(i != None):
-                            self.fallLength = fall(self.newchar, self.levelMount, i)
+                            self.fallLength = fall(
+                                self.newchar, self.levelMount, i)
                             if((self.newchar.health - self.fallLength) <= 0):
-                                self.dead = self.death()
+                                self.death()
                                 break
                             else:
-                                self.newchar.setHealth(self.newchar.health-self.fallLength)
+                                self.newchar.setHealth(
+                                    self.newchar.health-self.fallLength)
                                 self.fallLength = (
                                     ((self.fallLength/100) * random.randint(self.fallLength, int(self.newchar.position))))
-                                self.newchar.setPosition(self.newchar.position - self.fallLength)
+                                self.newchar.setPosition(
+                                    self.newchar.position - self.fallLength)
                                 break
                     if(self.dead == True):
                         break
                     if(self.fallLength != None):
-                        falltxt = displaylib.font(
-                            20, ("Fall: {0:.2f} m".format(self.fallLength)), [255, 255, 255], False)
+                        falltxt = displaylib.font(20, ("Fall: {0:.2f} m".format(self.fallLength)), [
+                                                  255, 255, 255], False)
                     else:
                         falltxt = displaylib.font(
                             20, "Fall: 0 m", [255, 255, 255], False)
