@@ -1,8 +1,19 @@
+<<<<<<< HEAD:pygamescode/AscensionLib.py
 import  os, sys, pygame, random
 import eventhandle, displaylib, Ascension
+=======
+import os
+import sys
+import pygame
+import random
+import eventhandle
+import displaylib
+import Ascension
+>>>>>>> 03c10a1b2184da09db24564a49a0585f6b91b39f:pygamescode/AsscensionLib.py
 from pygame.locals import *
 
-def fall(char,mount,chance):
+
+def fall(char, mount, chance):
     dif = mount.diff.split(',')
     stepDiff = None
     fChance = None
@@ -13,33 +24,37 @@ def fall(char,mount,chance):
         d[1] = d[1].strip(')')
         for i in d:
             e.append(int(i))
-    f = 1
+    i = 1
     sum = 0
     while(True):
-        sum += e[f]
+        sum += e[i]
         if(char.position <= sum):
-            stepDiff = e[f-1]/5
+            stepDiff = e[i-1]/5
             fChance = (float(mount.difficulty) + stepDiff) / 2
             break
+        else:
+            fChance = 0
         try:
-            f+= 2
-            e[f]
+            i += 2
+            e[i]
         except:
             break
-    if (fChance != None):
-        if(chance < ((fChance/2) * 100)):
-            if(stepDiff*5 == 1):
-                return 0
-            if(stepDiff*5 == 2):
-                return random.randint(1, int(mount.routeLength/250))
-            elif(stepDiff*5 == 3):
-                return random.randint(1, int(2 * mount.routeLength/100))
-            elif(stepDiff*5 == 4):
-                return random.randint(1, int(3 * mount.routeLength/100))
-            elif(stepDiff*5 == 5):
-                return random.randint(1, int(4 * mount.routeLength))
-        else: return 0
-    else: return 0
+    if(chance <= ((fChance*100)/2)):
+        if(stepDiff*5 == 1):
+            return 0
+        elif(stepDiff*5 == 2):
+            return (random.randint(0, 3))
+        elif(stepDiff*5 == 3):
+            return (random.randint(0, 9))
+        elif(stepDiff*5 == 4):
+            return (random.randint(0, 27))
+        elif(stepDiff*5 == 5):
+            return (random.randint(0, 33))
+        else:
+            return 0
+    else:
+        return 0
+
 
 class Mountain:
     def __init__(self, name, height, difficultyoverall, routelength, difficulties):
@@ -49,28 +64,37 @@ class Mountain:
         self.routeLength = routelength
         self.diff = difficulties
         self.images = []
+
     def on_init(self, Game):
         try:
             fName = self.name.replace(" ", "")
-            path  = displaylib.getpath("../Assets",(fName + ".txt"))
-            with open(path, "r") as f:
-                for line in f:
+            path = displaylib.getpath("../Assets", (fName + ".txt"))
+            with open(path, "r") as self.fallLength:
+                for line in self.fallLength:
                     path = displaylib.getpath("../Assets", line)
 
                     nwIm = displaylib.image(path)
                     #nwIm._image_surf = pygame.transform.smoothscale(nwIm._image_surf, ((1366/2),768))
                     w = (Game.windowSize[1]/nwIm.h()) * nwIm.w()
+<<<<<<< HEAD:pygamescode/AscensionLib.py
                     nwIm._image_surf = pygame.transform.smoothscale(nwIm._image_surf, (int(w), Game.windowSize[1]))
+=======
+                    nwIm._image_surf = pygame.transform.smoothscale(
+                        nwIm._image_surf, (int(w), Game.windowSize[1]))
+>>>>>>> 03c10a1b2184da09db24564a49a0585f6b91b39f:pygamescode/AsscensionLib.py
 
                     self.images.append(nwIm)
         except:
             print(pygame.get_error())
-            print( "Could not load the mountain images" )
+            print("Could not load the mountain images")
+
     def getHeight(self):
         return self.height
+
     def getRouteLength(self):
         return self.routeLength
 
+<<<<<<< HEAD:pygamescode/AscensionLib.py
 class smallScreen:
     def __init__(self, mount):
         self.mountain = mount
@@ -94,6 +118,10 @@ class Progress:
         return self.cpos / self.mountmax
     def getProgress(self):
         return self.Cprogress
+=======
+    def researchIncrement(self):
+        return 1 * self.difficulty
+>>>>>>> 03c10a1b2184da09db24564a49a0585f6b91b39f:pygamescode/AsscensionLib.py
 
 
 class climber:
@@ -104,17 +132,25 @@ class climber:
         self.position = None
         self.mountsClimbed = 0
         self.totalmetersclimbed = 0
+        self.health = 100
 
     def on_init(self):
         array = []
         try:
+<<<<<<< HEAD:pygamescode/AscensionLib.py
             path = displaylib.getpath("../Assets",self.fileName)
             with open(os.path.join(path), "r") as f:
 
                 for line in f:
+=======
+            path = displaylib.getpath("../Assets", self.fileName)
+            with open(os.path.join(path), "r") as self.fallLength:
+
+                for line in self.fallLength:
+>>>>>>> 03c10a1b2184da09db24564a49a0585f6b91b39f:pygamescode/AsscensionLib.py
                     array.append(line.rstrip('\n'))
         except:
-            print( "Could not load the character" )
+            print("Could not load the character")
         self.name = array[0]
         self.mountsClimbed = int(array[1])
         self.totalmetersclimbed = float(array[2])
@@ -131,9 +167,28 @@ class climber:
     def setPosition(self, pos):
         self.position = float(pos)
 
+<<<<<<< HEAD:pygamescode/AscensionLib.py
+=======
+    def getHealth(self):
+        return self.health
+
+    def setHealth(self, health):
+        self.health = health
+
+
+class smallScreen:
+    def __init__(self, mount):
+        self.mountain = mount
+        self.imageMap = None
+
+    def on_init(self):
+        self.imageMap = self.mountain.images[0]
+
+>>>>>>> 03c10a1b2184da09db24564a49a0585f6b91b39f:pygamescode/AsscensionLib.py
 
 class level:
     def __init__(self, name):
+        self.clock = pygame.time.Clock()
         self.name = name
         self.mounts = []
         self.newchar = climber("climber.txt")
@@ -141,7 +196,11 @@ class level:
         self.dead = False
         self.win = False
         self.game = None
+        self.resear = []
+        self.fallLength = None
+        self.play = False
 
+<<<<<<< HEAD:pygamescode/AscensionLib.py
 
     def on_init(self,game):
         self.game = game
@@ -150,9 +209,18 @@ class level:
             path = displaylib.getpath("../assets","mountains.txt")
             with open(path, "r") as f:
                 for line in f:
+=======
+    def on_init(self, game):
+        self.game = game
+        try:
+            levelList = []
+            path = displaylib.getpath("../assets", "mountains.txt")
+            with open(path, "r") as self.fallLength:
+                for line in self.fallLength:
+>>>>>>> 03c10a1b2184da09db24564a49a0585f6b91b39f:pygamescode/AsscensionLib.py
                     levelList.append(line.rstrip('\n'))
         except:
-           print( "Could not load the level" )
+            print("Could not load the level")
         for i in levelList:
             info = (i.split(";"))
             name = info[0]
@@ -164,6 +232,7 @@ class level:
             mount = Mountain(name, height, difficulty, routelen, diffs)
             mount.on_init(game)
             self.mounts.append(mount)
+<<<<<<< HEAD:pygamescode/AscensionLib.py
 
     def success(self, mount):
         path = displaylib.getpath("../Assets", "success.png")
@@ -175,18 +244,99 @@ class level:
         self.game._display_surf.blit(routetext.text_surf,((self.game.windowSize[0]/2 - routetext.text_surf.get_width()),self.game.windowSize[1]/2 + 30))
         pygame.display.flip()
         displaylib.font()
+=======
+            self.resear.append(0)
+
+    def levelSelect(self):
+        pass
+
+    def success(self, ev, mount):
+        self.clock.tick_busy_loop()
+        self.play = False
+        self.win = True
+        self.newchar.mountsClimbed += 1
+        self.newchar.setHealth(100)
+        self.newchar.setPosition(0)
+        path = displaylib.getpath("../Assets", "success.png")
+        winim = displaylib.image(path)
+        mounttext = displaylib.font(24, mount.name, (255, 255, 255), True)
+        routetext = displaylib.font(
+            20, "You climbed: " + str(mount.routeLength) + " m", (255, 255, 255), False)
+       # timetext = displaylib.font(24, ("Time: {0:.2f} minutes").format(self.clock.get_time()), (255,255,255), False)
+
+        while (True):
+            for event in pygame.event.get():
+                ev.on_event(event, self.game, self.newchar, self)
+                self.game._display_surf.fill([0, 0, 0])
+                self.game._display_surf.blit(mounttext.text_surf, ((
+                    self.game.windowSize[0]/2 - mounttext.text_surf.get_width()), self.game.windowSize[1]/2))
+                self.game._display_surf.blit(routetext.text_surf, ((
+                    self.game.windowSize[0]/2 - routetext.text_surf.get_width()), self.game.windowSize[1]/2 + 30))
+        #        self.game._display_surf.blit(timetext.text_surf, ((
+         #           self.game.windowSize[0]/2 - timetext.text_surf.get_width()), self.game.windowSize[1]/2 + 60))
+                pygame.display.update()
+            if(self.game.onHomeScreen == True):
+                break
+>>>>>>> 03c10a1b2184da09db24564a49a0585f6b91b39f:pygamescode/AsscensionLib.py
 
     def death(self):
+        self.play = False
+        self.dead = True
         self.newchar.position = 0
-        deathtext = displaylib.font(36, "You have died", (255,255,255), False)
-        self.game._display_surf.fill([0,0,0])
-        self.game._display_surf.blit(deathtext.text_surf, (self.game.windowSize[0]/2, self.game.windowSize[1]/2))
+        self.game._display_surf.fill([0, 0, 0])
         pygame.display.flip()
-        return True
+        deathtext = displaylib.font(
+            36, "You have died", (255, 255, 255), False)
+        while (True):
+            for event in pygame.event.get():
+                self.game._display_surf.fill([0, 0, 0])
+                self.game._display_surf.blit(
+                    deathtext.text_surf, (self.game.windowSize[0]/2, self.game.windowSize[1]/2))
+                pygame.display.flip()
+            if(self.game.onHomeScreen == True):
+                break
+        
+
+    def research(self):
+        pass
+
+    def levelRender(self):
+        try:
+            falltxt = displaylib.font(20, ("Fall: {0:.2f} m".format(self.fallLength)), [
+                255, 255, 255], False)
+            healthtxt = displaylib.font(20, ("Health: {0}".format(
+                self.newchar.health)), [255, 255, 255], False)
+            posText = displaylib.font(
+                20, ("Position: {0:.2f} m".format(self.newchar.position)), [255, 255, 255], False)
+        except:
+            posText = displaylib.font(
+                20, "Position: 0 m", [255, 255, 255], False)
+            falltxt = displaylib.font(
+                20, "Fall: 0 m", [255, 255, 255], False)
+            healthtxt = displaylib.font(
+                20, "Health: 100", [255, 255, 255], False)
+
+        self.game._display_surf.fill([0, 0, 0])
+        self.game._display_surf.blit(self.levelMount.images[0]._image_surf, (int(
+            self.game.windowSize[0]/2 - self.levelMount.images[0].w()/2), 0))
+
+        self.game._display_surf.blit(posText.text_surf, ((
+            self.game.windowSize[0] - self.levelMount.images[0].w()), 0))
+        self.game._display_surf.blit(falltxt.text_surf, ((
+            self.game.windowSize[0] - self.levelMount.images[0].w()), 20))
+        self.game._display_surf.blit(healthtxt.text_surf, ((
+            self.game.windowSize[0] - self.levelMount.images[0].w()), 40))
+        self.game._display_surf.blit(self.newchar.images[self.walkswitch]._image_surf, (
+            self.game.windowSize[0]/2 - (self.levelMount.images[0].w()/4), 2*self.game.windowSize[1]/3))
+
+        pygame.display.update()
 
     def run_level(self, select):
+        self.game.onHomeScreen = False
+        self.play = True
         self.levelMount = self.mounts[select]
         self.newchar.setPosition(0)
+<<<<<<< HEAD:pygamescode/AscensionLib.py
         levelprog = Progress(self.levelMount)
         ev = eventhandle.CEvent()
         self.walkswitch = 0
@@ -217,11 +367,44 @@ class level:
                            self.dead = self.death()
                        else: self.newchar.setPosition(self.newchar.position - f)
                 if(self.dead == True):
+=======
+
+        ev = eventhandle.CEvent()
+        self.walkswitch = 0
+        self.fallLength = None
+        self.clock.tick_busy_loop()
+        while self.play:
+            while not self.dead:
+                if(self.newchar.position >= self.levelMount.routeLength):
+                    self.success(ev, self.levelMount)
+>>>>>>> 03c10a1b2184da09db24564a49a0585f6b91b39f:pygamescode/AsscensionLib.py
                     break
-                if(f != None):
-                    falltxt = displaylib.font(20, "Fall: " + str(f) + " m", [255,255,255], False)
                 else:
+<<<<<<< HEAD:pygamescode/AscensionLib.py
                     falltxt = displaylib.font(20, "Fall: 0 m", [255,255,255], False)
 
             self.game._display_surf.blit(falltxt.text_surf, ((self.game.windowSize[0] - self.levelMount.images[0].w()),20))
             pygame.display.flip()
+=======
+                    self.levelRender()
+                    for event in pygame.event.get():
+                        i = ev.on_event(event, self.game, self.newchar, self)
+                        if(self.dead == True):
+                            break
+                        if(i != None):
+                            self.fallLength = fall(
+                                self.newchar, self.levelMount, i)
+                            if((self.newchar.health - self.fallLength) <= 0):
+                                self.death()
+                                break
+                            else:
+                                self.newchar.setHealth(
+                                    self.newchar.health-self.fallLength)
+                                self.fallLength = (
+                                    ((self.fallLength/100) * random.randint(self.fallLength, int(self.newchar.position))))
+                                self.newchar.setPosition(
+                                    self.newchar.position - self.fallLength)
+                                break
+                    if(self.dead == True):
+                        break
+>>>>>>> 03c10a1b2184da09db24564a49a0585f6b91b39f:pygamescode/AsscensionLib.py

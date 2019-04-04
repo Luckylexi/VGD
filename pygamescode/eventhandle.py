@@ -1,62 +1,102 @@
+<<<<<<< HEAD
 import pygame, random
 import AscensionLib, Ascension
+=======
+import pygame
+import random
+import AsscensionLib
+import Ascension
+>>>>>>> 03c10a1b2184da09db24564a49a0585f6b91b39f
 
 from AscensionLib import *
 from pygame.locals import *
 
+
 class CEvent:
     def __init__(self):
         pass
+
     def on_input_focus(self):
         pass
+
     def on_input_blur(self):
         pass
+
     def on_key_down(self, event, game, char, level):
         #keys = [pygame.K_KP_ENTER]
         if event.key == pygame.K_SPACE:
             if(level != None):
-                if(level.walkswitch == 0):
-                    level.walkswitch = 1
-                elif(level.walkswitch == 1):
-                    level.walkswitch = 0
-                else:
-                    level.walkswitch = 0
-                char.setPosition((char.getPosition()+(level.levelMount.routeLength/75)))
-                return random.randint(0,100)
+                if(level.play == True):
+                    if(level.walkswitch == 0):
+                        level.walkswitch = 1
+                    elif(level.walkswitch == 1):
+                        level.walkswitch = 0
+                    else:
+                        level.walkswitch = 0
+                    char.setPosition(
+                        (char.getPosition()+(level.levelMount.routeLength/10)))
+                    return random.randint(0, 100)
         elif event.key == pygame.K_RETURN:
             if(level != None):
-                if(level.dead == True):
-                    level.dead = False
+                if(level.play == True):
+                    if(level.dead == True):
+                        game.onHomescreen = True
+                        game.on_render()
+                elif(level.win == True):
+                    game.onHomeScreen = True
                     game.on_render()
+<<<<<<< HEAD
             else:
                 print ("got here")
                 self.beginner = AscensionLib.level("beginning")
+=======
+            elif(game.onHomeScreen == True):
+                print("got here")
+                self.beginner = AsscensionLib.level("beginning")
+>>>>>>> 03c10a1b2184da09db24564a49a0585f6b91b39f
                 self.beginner.on_init(game)
+                game.onHomeScreen = False
                 self.beginner.run_level(0)
+            else:
+                game.onHomeScreen = True
+                game.on_render()
+
     def on_key_up(self, event):
         pass
+
     def on_mouse_focus(self):
         pass
+
     def on_mouse_blur(self):
         pass
+
     def on_minimize(self):
         pass
+
     def on_restore(self):
         pass
-    def on_resize(self,event, level, game):
-        game._display_surf = pygame.display.set_mode(event.dict['size'], pygame.HWSURFACE | pygame.DOUBLEBUF | pygame.RESIZABLE)
+
+    def on_resize(self, event, level, game):
+        game._display_surf = pygame.display.set_mode(
+            event.dict['size'], pygame.HWSURFACE | pygame.DOUBLEBUF | pygame.RESIZABLE)
         game.windowSize = event.dict['size']
         if(level == None):
             game.on_render()
+
     def on_expose(self):
         pass
-    def on_exit(self,game, level):
+
+    def on_exit(self, game, level):
         if(level != None):
-            level.dead = True
+            if(level.play == True):
+                level.dead = True
+            if(level.win == True):
+                game.onHomeScreen = True
         game.set_running(False)
 
-    def on_user(self,event):
+    def on_user(self, event):
         pass
+
     def on_event(self, event, game, char, level):
         if event.type == QUIT:
             self.on_exit(game, level)
@@ -74,8 +114,13 @@ class CEvent:
             self.on_key_up(event)
 
         elif event.type == KEYDOWN:
+<<<<<<< HEAD
           i = self.on_key_down(event, game, char, level)
           return i
+=======
+            i = self.on_key_down(event, game, char, level)
+            return i
+>>>>>>> 03c10a1b2184da09db24564a49a0585f6b91b39f
 
         elif event.type == ACTIVEEVENT:
             if event.state == 1:
