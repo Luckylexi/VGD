@@ -143,6 +143,7 @@ class smallScreen:
 
 class level:
     def __init__(self, name):
+        self.clock = pygame.time.Clock()
         self.name = name
         self.mounts = []
         self.newchar = climber("climber.txt")
@@ -181,6 +182,7 @@ class level:
         pass
 
     def success(self, ev, mount):
+        self.clock.tick_busy_loop()
         self.play = False
         self.win = True
         self.newchar.mountsClimbed += 1
@@ -191,7 +193,8 @@ class level:
         mounttext = displaylib.font(24, mount.name, (255, 255, 255), True)
         routetext = displaylib.font(
             20, "You climbed: " + str(mount.routeLength) + " m", (255, 255, 255), False)
-            
+       # timetext = displaylib.font(24, ("Time: {0:.2f} minutes").format(self.clock.get_time()), (255,255,255), False)
+
         while (True):
             for event in pygame.event.get():
                 ev.on_event(event, self.game, self.newchar, self)
@@ -200,37 +203,63 @@ class level:
                     self.game.windowSize[0]/2 - mounttext.text_surf.get_width()), self.game.windowSize[1]/2))
                 self.game._display_surf.blit(routetext.text_surf, ((
                     self.game.windowSize[0]/2 - routetext.text_surf.get_width()), self.game.windowSize[1]/2 + 30))
+        #        self.game._display_surf.blit(timetext.text_surf, ((
+         #           self.game.windowSize[0]/2 - timetext.text_surf.get_width()), self.game.windowSize[1]/2 + 60))
                 pygame.display.update()
             if(self.game.onHomeScreen == True):
-                    break
+                break
 
     def death(self):
         self.play = False
+        self.dead = True
         self.newchar.position = 0
         self.game._display_surf.fill([0, 0, 0])
         pygame.display.flip()
         deathtext = displaylib.font(
             36, "You have died", (255, 255, 255), False)
-        self.game._display_surf.fill([0, 0, 0])
-        self.game._display_surf.blit(
-            deathtext.text_surf, (self.game.windowSize[0]/2, self.game.windowSize[1]/2))
-        pygame.display.flip()
-        self.dead = True
+        while (True):
+            for event in pygame.event.get():
+                self.game._display_surf.fill([0, 0, 0])
+                self.game._display_surf.blit(
+                    deathtext.text_surf, (self.game.windowSize[0]/2, self.game.windowSize[1]/2))
+                pygame.display.flip()
+            if(self.game.onHomeScreen == True):
+                break
+        
 
     def research(self):
         pass
 
     def levelRender(self):
+        try:
+            falltxt = displaylib.font(20, ("Fall: {0:.2f} m".format(self.fallLength)), [
+                255, 255, 255], False)
+            healthtxt = displaylib.font(20, ("Health: {0}".format(
+                self.newchar.health)), [255, 255, 255], False)
+            posText = displaylib.font(
+                20, ("Position: {0:.2f} m".format(self.newchar.position)), [255, 255, 255], False)
+        except:
+            posText = displaylib.font(
+                20, "Position: 0 m", [255, 255, 255], False)
+            falltxt = displaylib.font(
+                20, "Fall: 0 m", [255, 255, 255], False)
+            healthtxt = displaylib.font(
+                20, "Health: 100", [255, 255, 255], False)
+
         self.game._display_surf.fill([0, 0, 0])
         self.game._display_surf.blit(self.levelMount.images[0]._image_surf, (int(
             self.game.windowSize[0]/2 - self.levelMount.images[0].w()/2), 0))
-        posText = displaylib.font(
-            20, ("Position: {0:.2f} m".format(self.newchar.position)), [255, 255, 255], False)
+
         self.game._display_surf.blit(posText.text_surf, ((
             self.game.windowSize[0] - self.levelMount.images[0].w()), 0))
-
+        self.game._display_surf.blit(falltxt.text_surf, ((
+            self.game.windowSize[0] - self.levelMount.images[0].w()), 20))
+        self.game._display_surf.blit(healthtxt.text_surf, ((
+            self.game.windowSize[0] - self.levelMount.images[0].w()), 40))
         self.game._display_surf.blit(self.newchar.images[self.walkswitch]._image_surf, (
             self.game.windowSize[0]/2 - (self.levelMount.images[0].w()/4), 2*self.game.windowSize[1]/3))
+
+        pygame.display.update()
 
     def run_level(self, select):
         self.game.onHomeScreen = False
@@ -241,15 +270,14 @@ class level:
         ev = eventhandle.CEvent()
         self.walkswitch = 0
         self.fallLength = None
+        self.clock.tick_busy_loop()
         while self.play:
             while not self.dead:
-
-                self.levelRender()
-
                 if(self.newchar.position >= self.levelMount.routeLength):
                     self.success(ev, self.levelMount)
                     break
                 else:
+                    self.levelRender()
                     for event in pygame.event.get():
                         i = ev.on_event(event, self.game, self.newchar, self)
                         if(self.dead == True):
@@ -270,13 +298,3 @@ class level:
                                 break
                     if(self.dead == True):
                         break
-                    if(self.fallLength != None):
-                        falltxt = displaylib.font(20, ("Fall: {0:.2f} m".format(self.fallLength)), [
-                                                  255, 255, 255], False)
-                    else:
-                        falltxt = displaylib.font(
-                            20, "Fall: 0 m", [255, 255, 255], False)
-
-                self.game._display_surf.blit(falltxt.text_surf, ((
-                    self.game.windowSize[0] - self.levelMount.images[0].w()), 20))
-                pygame.display.flip()

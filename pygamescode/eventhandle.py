@@ -77,7 +77,10 @@ class CEvent:
 
     def on_exit(self, game, level):
         if(level != None):
-            level.dead = True
+            if(level.play == True):
+                level.dead = True
+            if(level.win == True):
+                game.onHomeScreen = True
         game.set_running(False)
 
     def on_user(self, event):
