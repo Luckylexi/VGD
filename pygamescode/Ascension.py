@@ -1,16 +1,11 @@
 import pygame
-<<<<<<< HEAD
-import  os, sys, random
-import AscensionLib, displaylib, eventhandle
-
-=======
 import os
 import sys
 import random
 import AsscensionLib
 import displaylib
 import eventhandle
->>>>>>> 03c10a1b2184da09db24564a49a0585f6b91b39f
+
 
 
 class Game:

@@ -1,14 +1,10 @@
-<<<<<<< HEAD
-import pygame, random
-import AscensionLib, Ascension
-=======
 import pygame
 import random
 import AsscensionLib
 import Ascension
->>>>>>> 03c10a1b2184da09db24564a49a0585f6b91b39f
 
-from AscensionLib import *
+
+from AsscensionLib import *
 from pygame.locals import *
 
 
@@ -45,15 +41,12 @@ class CEvent:
                 elif(level.win == True):
                     game.onHomeScreen = True
                     game.on_render()
-<<<<<<< HEAD
             else:
                 print ("got here")
-                self.beginner = AscensionLib.level("beginning")
-=======
-            elif(game.onHomeScreen == True):
+                self.beginner = AsscensionLib.level("beginning")
+            if(game.onHomeScreen == True):
                 print("got here")
                 self.beginner = AsscensionLib.level("beginning")
->>>>>>> 03c10a1b2184da09db24564a49a0585f6b91b39f
                 self.beginner.on_init(game)
                 game.onHomeScreen = False
                 self.beginner.run_level(0)
@@ -114,13 +107,8 @@ class CEvent:
             self.on_key_up(event)
 
         elif event.type == KEYDOWN:
-<<<<<<< HEAD
-          i = self.on_key_down(event, game, char, level)
-          return i
-=======
-            i = self.on_key_down(event, game, char, level)
-            return i
->>>>>>> 03c10a1b2184da09db24564a49a0585f6b91b39f
+		       i = self.on_key_down(event, game, char, level)
+		       return i
 
         elif event.type == ACTIVEEVENT:
             if event.state == 1:
