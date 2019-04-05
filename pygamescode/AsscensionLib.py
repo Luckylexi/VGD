@@ -79,22 +79,6 @@ class smallScreen:
         self.imageMap = self.mountain.images[0]
 
 
-class Progress:
-    def __init__(self, mount):
-        self.mountain = mount
-        self.cpos = 0
-        self.Cprogress = 0
-        self.mountmax = 0
-
-    def on_init(self):
-        self.cpos = climber.getPosition()
-        self.mountmax = self.mountain.getRouteLength()
-        print("Progress max mountain length = " + self.mountmax)
-        #self.Cprogress = self.cpos / mountmax    #may not update tho
-    def calcProg(self):
-        return self.cpos / self.mountmax
-    def getProgress(self):
-        return self.Cprogress
 
 
 class climber:
@@ -132,6 +116,27 @@ class climber:
     def setPosition(self, pos):
         self.position = float(pos)
 
+class Progress:
+    def __init__(self, mount, climber):
+        self.mountain = mount
+        self.cpos = 0
+        self.Cprogress = 0
+        self.mountmax = 0
+        self.climber = climber
+
+    def on_init(self):
+        self.cpos = self.climber.getPosition()
+        self.mountmax = self.mountain.getRouteLength()
+        #print("Progress max mountain length = " + self.mountmax)
+        #self.Cprogress = self.cpos / mountmax    #may not update tho
+    def calcProg(self):
+        try:
+            return self.cpos / self.mountmax
+        except:
+            return 0
+    def getProgress(self):
+        return self.Cprogress
+
 
 class level:
     def __init__(self, name):
@@ -142,6 +147,7 @@ class level:
         self.dead = False
         self.win = False
         self.game = None
+        self.progress = None
 
 
     def on_init(self,game):
@@ -165,6 +171,8 @@ class level:
             mount = Mountain(name, height, difficulty, routelen, diffs)
             mount.on_init(game)
             self.mounts.append(mount)
+            self.progress = Progress(mount, self.newchar)
+            self.progress.on_init()
 
     def success(self, mount):
         path = displaylib.getpath("../Assets", "success.png")
@@ -188,18 +196,18 @@ class level:
     def run_level(self, select):
         self.levelMount = self.mounts[select]
         self.newchar.setPosition(0)
-        levelprog = Progress(self.levelMount)
+        self.progress = Progress(self.levelMount, self.newchar)
         ev = eventhandle.CEvent()
         self.walkswitch = 0
         f = None
         while not self.dead:
-            levelprog.calcProg()
+            levelprog = self.progress
             self.game._display_surf.fill([0,0,0])
             self.game._display_surf.blit(self.levelMount.images[0]._image_surf,(int(self.game.windowSize[0]/2 - self.levelMount.images[0].w()/2),0))
             posText = displaylib.font(20, ("Position: " + f"{self.newchar.position: .1f}" + " m"), [255,255,255], False)
             self.game._display_surf.blit(posText.text_surf, ((self.game.windowSize[0] - self.levelMount.images[0].w()),0))
 
-            progText = levelprog.calcProg.displaylib.font(25, ("Progress: " + {self.levelMount.routeLength: .1} + " %"), [255,255,255], False)
+            progText = displaylib.font(25, ("Progress: " + f"{self.progress.calcProg(): .1f}" + " %"), [255,255,255], False)
             self.game._display_surf.blit(progText.text_surf, ((self.game.windowSize[0] - self.levelMount.images[0].w()), 680))
             self.game._display_surf.blit(self.newchar.images[self.walkswitch]._image_surf, (self.game.windowSize[0]/2 - (self.levelMount.images[0].w()/4), 2*self.game.windowSize[1]/3))
             if(self.newchar.position >= self.levelMount.routeLength):
