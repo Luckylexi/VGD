@@ -205,8 +205,6 @@ class level:
             mount.on_init(game)
             self.mounts.append(mount)
             self.resear.append(0)
-        #    self.progress = Progress(mount, self.newchar)
-        #    self.progress.on_init()
 
     def levelSelect(self):
         pass
@@ -320,8 +318,6 @@ class level:
                                 self.newchar, self.levelMount, i)
                             if((self.newchar.health - self.fallLength) <= 0):
                                 self.death()
-
-                                #self.progress.calcProg()
                                 break
                             else:
                                 self.newchar.setHealth(
@@ -330,8 +326,6 @@ class level:
                                     ((self.fallLength/100) * random.randint(self.fallLength, int(self.newchar.position))))
                                 self.newchar.setPosition(
                                     self.newchar.position - self.fallLength)
-
-                                #self.progress.calcProg()
                                 break
                     if(self.dead == True):
                         break
