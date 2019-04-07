@@ -24,6 +24,7 @@ class CEvent:
                 if(level.play == True):
                     if(level.walkswitch == 0):
                         level.walkswitch = 1
+                        
                     elif(level.walkswitch == 1):
                         level.walkswitch = 0
                     else:
@@ -42,8 +43,8 @@ class CEvent:
                     game.on_render()
             elif(game.onHomeScreen == True):
                 print("got here")
-                self.beginner = AsscensionLib.level("beginning")
-                self.beginner.on_init(game)
+                self.beginner = AsscensionLib.level("beginning", game)
+                self.beginner.on_init()
                 game.onHomeScreen = False
                 self.beginner.run_level(0)
             else:

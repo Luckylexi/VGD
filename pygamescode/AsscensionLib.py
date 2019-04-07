@@ -90,7 +90,8 @@ class Mountain:
 
 
 class climber:
-    def __init__(self, file):
+    def __init__(self, file, game):
+        self.game = game
         self.fileName = file
         self.name = None
         self.images = []
@@ -117,6 +118,9 @@ class climber:
                 path = displaylib.getpath("../Assets", i)
                 nImage = displaylib.image(path)
                 if (nImage._image_surf != None):
+                    w = (self.game.windowSize[1]/nImage.h()) * nImage.w() 
+                    nImage._image_surf = pygame.transform.smoothscale(
+                        nImage._image_surf, (int(w), self.game.windowSize[1]))
                     self.images.append(nImage)
 
     def getPosition(self):
@@ -142,21 +146,21 @@ class smallScreen:
 
 
 class level:
-    def __init__(self, name):
+    def __init__(self, name, game):
         self.clock = pygame.time.Clock()
         self.name = name
         self.mounts = []
-        self.newchar = climber("climber.txt")
+        self.newchar = climber("climber.txt", game)
         self.newchar.on_init()
         self.dead = False
         self.win = False
-        self.game = None
+        self.game = game
         self.resear = []
         self.fallLength = None
         self.play = False
+        self.walksequence = []
 
-    def on_init(self, game):
-        self.game = game
+    def on_init(self):
         try:
             levelList = []
             path = displaylib.getpath("../assets", "mountains.txt")
@@ -174,9 +178,16 @@ class level:
             diffs = info[4].rstrip('\n')
             #diffs = [ x[0] for x in info[4]]
             mount = Mountain(name, height, difficulty, routelen, diffs)
-            mount.on_init(game)
+            mount.on_init(self.game)
             self.mounts.append(mount)
             self.resear.append(0)
+        try:
+            self.walksequence.append(displaylib.animation(self.game, self, [self.newchar.images[0], self.newchar.images[1], self.newchar.images[2], self.newchar.images[3]],0.1))
+            self.walksequence.append(displaylib.animation(self.game, self, [self.newchar.images[4], self.newchar.images[5], self.newchar.images[6]],0.1))
+        except:
+            self.walksequence.append(displaylib.image(displaylib.getpath("../assets","leftfoot.png")))
+            self.walksequence.append(displaylib.image(displaylib.getpath("../assets","rightfoot.png")))
+
 
     def levelSelect(self):
         pass
@@ -246,20 +257,28 @@ class level:
             healthtxt = displaylib.font(
                 20, "Health: 100", [255, 255, 255], False)
 
+
         self.game._display_surf.fill([0, 0, 0])
-        self.game._display_surf.blit(self.levelMount.images[0]._image_surf, (int(
-            self.game.windowSize[0]/2 - self.levelMount.images[0].w()/2), 0))
+
 
         self.game._display_surf.blit(posText.text_surf, ((
-            self.game.windowSize[0] - self.levelMount.images[0].w()), 0))
+                self.game.windowSize[0] - self.levelMount.images[0].w()), 0))
         self.game._display_surf.blit(falltxt.text_surf, ((
             self.game.windowSize[0] - self.levelMount.images[0].w()), 20))
         self.game._display_surf.blit(healthtxt.text_surf, ((
             self.game.windowSize[0] - self.levelMount.images[0].w()), 40))
-        self.game._display_surf.blit(self.newchar.images[self.walkswitch]._image_surf, (
-            self.game.windowSize[0]/2 - (self.levelMount.images[0].w()/4), 2*self.game.windowSize[1]/3))
 
-        pygame.display.update()
+        if(self.walkswitch == self.prevwalkswitch):
+            self.game._display_surf.blit(self.levelMount.images[0]._image_surf, (int(
+                        self.game.windowSize[0]/2 - self.levelMount.images[0].w()/2), 0))
+            self.walksequence[self.walkswitch].lastImage()
+            pygame.display.update()
+        else:
+            for i in self.walksequence[self.walkswitch].sequence:
+                self.game._display_surf.blit(self.levelMount.images[0]._image_surf, (int(
+                            self.game.windowSize[0]/2 - self.levelMount.images[0].w()/2), 0))
+                self.walksequence[self.walkswitch].renderAnim(i)
+                pygame.display.update()
 
     def run_level(self, select):
         self.game.onHomeScreen = False
@@ -269,6 +288,7 @@ class level:
 
         ev = eventhandle.CEvent()
         self.walkswitch = 0
+        self.prevwalkswitch = self.walkswitch
         self.fallLength = None
         self.clock.tick_busy_loop()
         while self.play:
@@ -278,6 +298,7 @@ class level:
                     break
                 else:
                     self.levelRender()
+                    self.prevwalkswitch = self.walkswitch
                     for event in pygame.event.get():
                         i = ev.on_event(event, self.game, self.newchar, self)
                         if(self.dead == True):

@@ -35,6 +35,31 @@ class image:
         return self._image_surf.get_height()
 
 
+class animation:
+    def __init__(self, g, l, images, timing):
+        self.game = g
+        self.level = l
+        self.sequence = images
+        self.time = timing
+        self.rect1 = None
+
+    def lastImage(self):
+        self.rect1 = pygame.Rect(((self.game.windowSize[0]/2 - self.sequence[len(self.sequence) - 1].w()/2), (self.game.windowSize[1] - 3 * (self.sequence[len(
+            self.sequence) - 1].h()/4))), ((self.game.windowSize[0]/2 + self.sequence[len(self.sequence) - 1].w()/2), self.sequence[len(self.sequence) - 1].h()/4))
+        self.game._display_surf.blit(self.sequence[len(self.sequence) - 1]._image_surf, ((
+            self.game.windowSize[0]/2 - self.sequence[len(self.sequence) - 1].w()/2), 0))
+
+    def renderAnim(self, i):
+            self.rect1 = pygame.Rect(((self.game.windowSize[0]/2 - i.w()/2), 0), ((self.game.windowSize[0]/2 + i.w()/2), i.h()))
+            try:
+                self.game._display_surf.blit(
+                    i._image_surf, ((self.game.windowSize[0]/2 - i.w()/2), 0))
+            except:
+                print("Could not load image " +
+                      i.fileName + " " + pygame.get_error())
+            pygame.time.delay(int(self.time*1000))
+
+
 class font:
     def __init__(self, size, textline, color, underline):
         self.file = getpath("../Assets", "FrederickatheGreat-Regular.ttf")
