@@ -149,15 +149,22 @@ class Progress:
         self.climber = climber
 
     def on_init(self):
-        self.cpos = self.climber.getPosition()
-        self.mountmax = self.mountain.getRouteLength()
+        #self.cpos = self.climber.getPosition()
+        #self.mountmax = self.mountain.getRouteLength()
+        self.Cprogress = 0
         print("Progress max mountain length = " +str( self.mountmax))
+        print("Progress player position = " + str(self.cpos))
         #self.Cprogress = self.cpos / mountmax    #may not update tho
-    def calcProg(self):
+
+    def calcProg(self, climber, mount):
         try:
-            return self.cpos / self.mountmax
+            self.cpos = climber.getPosition()
+            self.mountmax = mount.getRouteLength()
+            self.Cprogress = self.cpos / self.mountmax *100
+            print(self.Cprogress)
         except:
             print("Could not Calc progress")
+
     def getProgress(self):
         return self.Cprogress
 
@@ -198,8 +205,8 @@ class level:
             mount.on_init(game)
             self.mounts.append(mount)
             self.resear.append(0)
-            self.progress = Progress(mount, self.newchar)
-            self.progress.on_init()
+        #    self.progress = Progress(mount, self.newchar)
+        #    self.progress.on_init()
 
     def levelSelect(self):
         pass
@@ -220,7 +227,7 @@ class level:
 
         while (True):
             for event in pygame.event.get():
-                ev.on_event(event, self.game, self.newchar, self)
+                ev.on_event(event, self.game, self.newchar, self, self.progress)
                 self.game._display_surf.fill([0, 0, 0])
                 self.game._display_surf.blit(mounttext.text_surf, ((
                     self.game.windowSize[0]/2 - mounttext.text_surf.get_width()), self.game.windowSize[1]/2))
@@ -261,7 +268,7 @@ class level:
                 self.newchar.health)), [255, 255, 255], False)
             posText = displaylib.font(
                 20, ("Position: {0:.2f} m".format(self.newchar.position)), [255, 255, 255], False)
-            progText = displaylib.font(25, ("Progress: {0:.1f} %".format(self.progress.calcProg())), [255,255,255], False)
+            progText = displaylib.font(25, ("Progress: {0:.1f} %".format(self.progress.getProgress())), [255,255,255], False)
         except:
             posText = displaylib.font(
                 20, "Position: 0 m", [255, 255, 255], False)
@@ -287,13 +294,12 @@ class level:
         pygame.display.update()
 
     def run_level(self, select):
-        levelprog = self.progress
         self.game.onHomeScreen = False
         self.play = True
         self.levelMount = self.mounts[select]
         self.newchar.setPosition(0)
-        #self.progress = Progress(self.levelMount, self.newchar)
-        #self.progress.on_init()
+        self.progress = Progress(self.levelMount, self.newchar)
+        self.progress.on_init()
         ev = eventhandle.CEvent()
         self.walkswitch = 0
         self.fallLength = None
@@ -306,7 +312,7 @@ class level:
                 else:
                     self.levelRender()
                     for event in pygame.event.get():
-                        i = ev.on_event(event, self.game, self.newchar, self)
+                        i = ev.on_event(event, self.game, self.newchar, self, self.progress)
                         if(self.dead == True):
                             break
                         if(i != None):
@@ -314,6 +320,8 @@ class level:
                                 self.newchar, self.levelMount, i)
                             if((self.newchar.health - self.fallLength) <= 0):
                                 self.death()
+
+                                #self.progress.calcProg()
                                 break
                             else:
                                 self.newchar.setHealth(
@@ -322,6 +330,8 @@ class level:
                                     ((self.fallLength/100) * random.randint(self.fallLength, int(self.newchar.position))))
                                 self.newchar.setPosition(
                                     self.newchar.position - self.fallLength)
+
+                                #self.progress.calcProg()
                                 break
                     if(self.dead == True):
                         break

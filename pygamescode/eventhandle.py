@@ -17,7 +17,7 @@ class CEvent:
     def on_input_blur(self):
         pass
 
-    def on_key_down(self, event, game, char, level):
+    def on_key_down(self, event, game, char, level, prog):
         #keys = [pygame.K_KP_ENTER]
         if event.key == pygame.K_SPACE:
             if(level != None):
@@ -30,6 +30,7 @@ class CEvent:
                         level.walkswitch = 0
                     char.setPosition(
                         (char.getPosition()+(level.levelMount.routeLength/10)))
+                    prog.calcProg(char, level.levelMount)
                     return random.randint(0, 100)
         elif event.key == pygame.K_RETURN:
             if(level != None):
@@ -86,7 +87,7 @@ class CEvent:
     def on_user(self, event):
         pass
 
-    def on_event(self, event, game, char, level):
+    def on_event(self, event, game, char, level, prog):
         if event.type == QUIT:
             self.on_exit(game, level)
 
@@ -103,7 +104,7 @@ class CEvent:
             self.on_key_up(event)
 
         elif event.type == KEYDOWN:
-            i = self.on_key_down(event, game, char, level)
+            i = self.on_key_down(event, game, char, level, prog)
             return i
 
         elif event.type == ACTIVEEVENT:
