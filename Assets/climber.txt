@@ -1,5 +1,10 @@
-Bibbely Bob Jones
+Lizzy
 0
 0
-rightfoot.png
-leftfoot.png
+Lizzy1.png
+Lizzy2.png
+Lizzy3.png
+Lizzy4.png
+Lizzy5.png
+Lizzy6.png
+Lizzy7.png
