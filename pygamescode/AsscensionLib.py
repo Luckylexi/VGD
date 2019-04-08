@@ -165,6 +165,9 @@ class Progress:
         except:
             print("Could not Calc progress")
 
+    def calcRestProg(self, climber, mount):
+        self.climberHealth = self.climber.getHealth()
+
     def getProgress(self):
         return self.Cprogress
 
@@ -253,6 +256,15 @@ class level:
                 pygame.display.flip()
             if(self.game.onHomeScreen == True):
                 break
+
+    def rest(self, ev, climber, mount):
+        self.restingchar = climber.
+        self.clock.tick()
+        print("Resting Players Health... " + )
+        print("Resting time passed... " + self.clock.get_time())
+        self.clock.tick()
+        self.restMount = self.mounts[mount]
+
 
 
     def research(self):
