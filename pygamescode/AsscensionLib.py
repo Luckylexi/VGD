@@ -152,7 +152,7 @@ class Progress:
         #self.cpos = self.climber.getPosition()
         #self.mountmax = self.mountain.getRouteLength()
         self.Cprogress = 0
-        print("Progress max mountain length = " +str( self.mountmax))
+        print("Progress max mountain length = " +str(self.mountmax))
         print("Progress player position = " + str(self.cpos))
         #self.Cprogress = self.cpos / mountmax    #may not update tho
 
@@ -165,8 +165,9 @@ class Progress:
         except:
             print("Could not Calc progress")
 
-    def calcRestProg(self, climber, mount):
-        self.climberHealth = self.climber.getHealth()
+    def calcRestProg(self, climber):
+        self.climberHealth = self.climber.getHealth() + 5
+        return self.climberHealth
 
     def getProgress(self):
         return self.Cprogress
@@ -257,13 +258,13 @@ class level:
             if(self.game.onHomeScreen == True):
                 break
 
-    def rest(self, ev, climber, mount):
-        self.restingchar = climber.
+    def rest(self, ev, climber):
+        self.res = climber.getHealth()
         self.clock.tick()
-        print("Resting Players Health... " + )
-        print("Resting time passed... " + self.clock.get_time())
+        print("Resting Players Health... " + str(self.res))
+        print("Resting time passed... " + str(self.clock.get_time()))
         self.clock.tick()
-        self.restMount = self.mounts[mount]
+        #self.restMount = self.mounts[mount]
 
 
 
@@ -318,6 +319,7 @@ class level:
             while not self.dead:
                 if(self.newchar.position >= self.levelMount.routeLength):
                     self.success(ev, self.levelMount)
+                    self.rest(ev, self.newchar)
                     break
                 else:
                     self.levelRender()
