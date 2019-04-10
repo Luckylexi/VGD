@@ -62,7 +62,7 @@ class Game:
         if self.on_init() == False:
             self._running = False
         self.on_render()
-        self.openingMusic.play()
+        #self.openingMusic.play()
         while(self._running):
             # pygame.event.post(pygame.event.Event(2))
             for event in pygame.event.get():

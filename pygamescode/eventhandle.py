@@ -43,7 +43,7 @@ class CEvent:
                     game.on_render()
             elif(game.onHomeScreen == True):
                 print("got here")
-                game.openingMusic.music.stop()
+                #game.openingMusic.music.stop()
                 self.beginner = AsscensionLib.level("beginning", game)
                 self.beginner.on_init()
                 game.onHomeScreen = False
