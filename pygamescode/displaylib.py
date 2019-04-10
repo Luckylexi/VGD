@@ -69,3 +69,27 @@ class font:
             print("Could not load font " + self.file + " " + pygame.get_error())
         self.f.set_underline(underline)
         self.text_surf = self.f.render(textline, True, color)
+
+
+class sound:
+    def __init__(self, fileName):
+        self.fileName = fileName
+        self.sound = None
+        try:
+            self.sound = pygame.mixer.Sound(fileName)
+        except:
+            print(f"Could not load {0}, pygame error: {1}", fileName, pygame.get_error())
+
+class music:
+    def __init__(self, fileName):
+        self.fileName = fileName
+        self.music = None
+        try:
+            self.music = pygame.mixer.music.load(self.fileName)
+        except:
+            print(f"Could not load {0}, pygame error: {1}", self.fileName, pygame.get_error())
+    def play(self, loop=-1):
+        try:
+            self.music.play(loop)
+        except:
+            print(f"Could not play {0}, pygame error: {1}", self.fileName, pygame.get_error())
