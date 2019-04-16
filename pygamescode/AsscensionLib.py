@@ -159,6 +159,7 @@ class level:
         self.fallLength = None
         self.play = False
         self.walksequence = []
+        self.walksounds = []
 
     def on_init(self):
         try:
@@ -188,7 +189,19 @@ class level:
             self.walksequence.append(displaylib.image(displaylib.getpath("../assets","leftfoot.png")))
             self.walksequence.append(displaylib.image(displaylib.getpath("../assets","rightfoot.png")))
 
-
+        try:
+            Ws = []
+            path = displaylib.getpath("../assets", "walksounds.txt")
+            with open(path, "r") as f:
+                for line in f:
+                    Ws.append(line.rstrip('\n'))
+        except:
+            print("could not load walking sounds")
+        
+        for i in Ws:
+            path = displaylib.getpath("../assets", i)
+            newSound = displaylib.sound(path)
+            self.walksounds.append(newSound)
     def levelSelect(self):
         pass
 
@@ -241,7 +254,12 @@ class level:
     def research(self):
         pass
 
+    def soundSelect(self):
+        i = random.randint(1,len(self.walksounds))
+        return self.walksounds[i-1]
+
     def levelRender(self):
+        self.walkSound = self.soundSelect()
         try:
             falltxt = displaylib.font(20, ("Fall: {0:.2f} m".format(self.fallLength)), [
                 255, 255, 255], False)
@@ -274,11 +292,13 @@ class level:
             self.walksequence[self.walkswitch].lastImage()
             pygame.display.update()
         else:
+            self.walkSound.sound.play()
             for i in self.walksequence[self.walkswitch].sequence:
                 self.game._display_surf.blit(self.levelMount.images[0]._image_surf, (int(
                             self.game.windowSize[0]/2 - self.levelMount.images[0].w()/2), 0))
                 self.walksequence[self.walkswitch].renderAnim(i)
                 pygame.display.update()
+            
 
     def run_level(self, select):
         self.game.onHomeScreen = False

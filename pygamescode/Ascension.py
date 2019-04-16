@@ -16,16 +16,19 @@ class Game:
         self._display_surf = None
         self.ev = eventhandle.CEvent()
         self.windowSize = None
+        self.openingMusic = None
 
     def on_init(self):
         self.onHomeScreen = True
         pygame.init()
+        pygame.mixer.init()
         pygame.display.set_caption("Ascension (demo)")
         self._display_surf = pygame.display.set_mode(
             (1280, 720), pygame.HWSURFACE | pygame.DOUBLEBUF | pygame.RESIZABLE)
         self.windowSize = [
             self._display_surf.get_width(), self._display_surf.get_height()]
         self._running = True
+        self.openingMusic = displaylib.music(displaylib.getpath("../assets","tobias_weber_-_Between_Worlds_(Instrumental).mp3"))
         self.openingScreen = displaylib.image("ascensionopenscreen.png")
         self.Ascensiontitletext = displaylib.font(
             75, "Ascension", (0, 0, 0), False)
@@ -59,8 +62,9 @@ class Game:
         if self.on_init() == False:
             self._running = False
         self.on_render()
+        self.openingMusic.play()
         while(self._running):
-            # pygame.event.post(pygame.event.Event(2))
+            #pygame.event.post(pygame.event.Event(2))
             for event in pygame.event.get():
                 self.ev.on_event(event, theGame, None, None)
             self.on_render()
