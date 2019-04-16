@@ -37,13 +37,15 @@ class CEvent:
                 if(level.play == True):
                     if(level.dead == True):
                         game.onHomescreen = True
+                        game.openingMusic.play()
                         game.on_render()
                 elif(level.win == True):
                     game.onHomeScreen = True
+                    game.openingMusic.play()
                     game.on_render()
             elif(game.onHomeScreen == True):
                 print("got here")
-                #game.openingMusic.music.stop()
+                game.openingMusic.stop()
                 self.beginner = AsscensionLib.level("beginning", game)
                 self.beginner.on_init()
                 game.onHomeScreen = False
