@@ -190,8 +190,6 @@ class level:
         self.fallLength = None
         self.play = False
         self.progress = None
-
-    def on_init(self, game):
         self.game = game
         self.resear = []
         self.fallLength = None
@@ -354,7 +352,6 @@ class level:
         self.play = True
         self.levelMount = self.mounts[select]
         self.newchar.setPosition(0)
-
         ev = eventhandle.CEvent()
         self.walkswitch = 0
         self.prevwalkswitch = self.walkswitch
