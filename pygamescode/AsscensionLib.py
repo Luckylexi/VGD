@@ -332,7 +332,7 @@ class level:
             self.game.windowSize[0] - self.levelMount.images[0].w()), 20))
         self.game._display_surf.blit(healthtxt.text_surf, ((
             self.game.windowSize[0] - self.levelMount.images[0].w()), 40))
-
+        self.game._display_surf.blit(progText.text_surf, ((self.game.windowSize[0] - self.levelMount.images[0].w()), 680))
         if(self.walkswitch == self.prevwalkswitch):
             self.game._display_surf.blit(self.levelMount.images[0]._image_surf, (int(
                         self.game.windowSize[0]/2 - self.levelMount.images[0].w()/2), 0))
@@ -344,8 +344,9 @@ class level:
                 self.game._display_surf.blit(self.levelMount.images[0]._image_surf, (int(
                             self.game.windowSize[0]/2 - self.levelMount.images[0].w()/2), 0))
                 self.walksequence[self.walkswitch].renderAnim(i)
+
                 pygame.display.update()
-        self.game._display_surf.blit(progText.text_surf, ((self.game.windowSize[0] - self.levelMount.images[0].w()), 680))
+
 
     def run_level(self, select):
         self.game.onHomeScreen = False
