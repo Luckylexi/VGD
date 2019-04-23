@@ -170,6 +170,9 @@ class Progress:
             print("Could not Calc progress")
 
     def calcRestProg(self, climber):
+        self.climber = climber
+        print("Player health.. " + str(self.climber.getHealth()))
+        print("Player resting... + 5 hp..")
         self.climberHealth = self.climber.getHealth() + 5
         return self.climberHealth
 
@@ -190,6 +193,7 @@ class level:
         self.fallLength = None
         self.play = False
         self.progress = None
+        self.res = None
         self.game = game
         self.resear = []
         self.fallLength = None
@@ -287,11 +291,18 @@ class level:
                 break
 
     def rest(self, ev, climber):
-        self.res = climber.getHealth()
-        self.clock.tick()
-        print("Resting Players Health... " + str(self.res))
-        print("Resting time passed... " + str(self.clock.get_time()))
-        self.clock.tick()
+        self.isResting = True
+        try:
+            pygame.time.delay(100)
+            self.res = self.progress.calcRestProg(climber)
+            #self.clock.tick()
+            print("Resting Players Health... " + str(climber.getHealth()))
+            print("Resting time passed... " + str(self.clock.get_time()))
+            #self.clock.tick()
+        except:
+            print("unable to calculate resting progress.. " + pygame.get_error())
+
+
         #self.restMount = self.mounts[mount]
 
 
@@ -344,7 +355,6 @@ class level:
                 self.game._display_surf.blit(self.levelMount.images[0]._image_surf, (int(
                             self.game.windowSize[0]/2 - self.levelMount.images[0].w()/2), 0))
                 self.walksequence[self.walkswitch].renderAnim(i)
-
                 pygame.display.update()
 
 
