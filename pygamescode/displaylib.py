@@ -16,9 +16,10 @@ def getpath(path, filename):
 
 
 class image:
-    def __init__(self, fileName):
+    def __init__(self, fileName, pos):
         self.fileName = fileName
         self._image_surf = None
+        self.position = pos
         try:
             self._image_surf = pygame.image.load(self.fileName).convert_alpha()
             # if(scalew != None and scaleh != None):
@@ -32,8 +33,15 @@ class image:
         return w
 
     def h(self):
-        return self._image_surf.get_height()
+        h = self._image_surf.get_height()
+        return h
 
+    def resize(self, xSize, ySize):
+        try:
+            self._image_surf = pygame.transform.smoothscale(self._image_surf, (xSize, ySize))
+        except:
+            print(f"Could not resize {0}", self.fileName)
+            print(pygame.get_error())
 
 class animation:
     def __init__(self, g, l, images, timing):

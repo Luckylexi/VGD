@@ -7,7 +7,6 @@ import displaylib
 import Ascension
 from pygame.locals import *
 
-
 def fall(char, mount, chance):
     dif = mount.diff.split(',')
     stepDiff = None
@@ -25,6 +24,8 @@ def fall(char, mount, chance):
     while(True):
         sum += e[i]
         if(char.position <= sum):
+            if( (i-1) <= len(mount.mountImages)):
+                mount.mountArea = i-1
             stepDiff = e[i-1]/5
             fChance = (float(mount.difficulty) + stepDiff) / 2
             break
@@ -51,7 +52,6 @@ def fall(char, mount, chance):
     else:
         return 0
 
-
 class Mountain:
     def __init__(self, name, height, difficultyoverall, routelength, difficulties):
         self.name = name
@@ -60,6 +60,8 @@ class Mountain:
         self.routeLength = routelength
         self.diff = difficulties
         self.stepdiff = []
+        self.mountArea = 0
+        self.skyImage = None
         self.mountImages = []
         self.pathImages = []
         self.other = []
@@ -68,10 +70,10 @@ class Mountain:
         try:
             fName = self.name.replace(" ", "")
             path = displaylib.getpath("../Assets", (fName + ".txt"))
-            with open(path, "r") as self.fallLength:
-                for line in self.fallLength:
+            with open(path, "r") as f:
+                for line in f:
+                    line = line.strip('\n')
                     path = displaylib.getpath("../Assets", line)
-
                     nwIm = displaylib.image(path,0)
                     #nwIm._image_surf = pygame.transform.smoothscale(nwIm._image_surf, ((1366/2),768))
                     w = (Game.windowSize[1]/nwIm.h()) * nwIm.w()
@@ -79,6 +81,8 @@ class Mountain:
                         nwIm._image_surf, (int(w), Game.windowSize[1]))
                     if("path" in path):
                         self.pathImages.append(nwIm)
+                    elif("Sky" in path):
+                        self.skyImage = nwIm
                     elif(self.name.replace(" ","") in path):
                         self.mountImages.append(nwIm)
                     else:
@@ -95,7 +99,6 @@ class Mountain:
 
     def researchIncrement(self):
         return 1 * self.difficulty
-
 
 class climber:
     def __init__(self, file, game):
@@ -124,7 +127,7 @@ class climber:
         if (array != None):
             for i in array:
                 path = displaylib.getpath("../Assets", i)
-                nImage = displaylib.image(path,0)
+                nImage = displaylib.image(path, 0)
                 if (nImage._image_surf != None):
                     w = (self.game.windowSize[1]/nImage.h()) * nImage.w() 
                     nImage._image_surf = pygame.transform.smoothscale(
@@ -143,7 +146,6 @@ class climber:
     def setHealth(self, health):
         self.health = health
 
-
 class smallScreen:
     def __init__(self, mount):
         self.mountain = mount
@@ -152,23 +154,30 @@ class smallScreen:
     def on_init(self):
         self.imageMap = self.mountain.images[0]
 
-
 class level:
     def __init__(self, name, game):
         self.clock = pygame.time.Clock()
+
         self.name = name
         self.mounts = []
         self.levelMount = None
+
         self.newchar = climber("climber.txt", game)
         self.newchar.on_init()
+
         self.dead = False
         self.win = False
         self.game = game
+
         self.resear = []
         self.fallLength = None
+
         self.play = False
+
+        self.moveSize = 1
         self.walksequence = []
         self.walksounds = []
+        self.others = []
         
     def on_init(self):
         try:
@@ -191,13 +200,9 @@ class level:
             mount.on_init(self.game)
             self.mounts.append(mount)
             self.resear.append(0)
-        try:
             self.walksequence.append(displaylib.animation(self.game, self, [self.newchar.images[0], self.newchar.images[1], self.newchar.images[2], self.newchar.images[3]],0.1))
             self.walksequence.append(displaylib.animation(self.game, self, [self.newchar.images[4], self.newchar.images[5], self.newchar.images[6]],0.1))
-        except:
-            self.walksequence.append(displaylib.image(displaylib.getpath("../assets","leftfoot.png")))
-            self.walksequence.append(displaylib.image(displaylib.getpath("../assets","rightfoot.png")))
-
+       
         try:
             Ws = []
             path = displaylib.getpath("../assets", "walksounds.txt")
@@ -212,9 +217,6 @@ class level:
             newSound = displaylib.sound(path)
             self.walksounds.append(newSound)
     
-    def levelSelect(self):
-        pass
-
     def success(self, ev, mount):
         self.clock.tick_busy_loop()
         self.play = False
@@ -267,16 +269,31 @@ class level:
         i = random.randint(1,len(self.walksounds))
         return self.walksounds[i-1]
 
-    def pathRender(self,move):
-        i = random.randint(0,len(self.levelMount.other)-1)
-        mountMoveSize = (self.levelMount.stepdiff[1]/self.stepsize) * self.levelMount.mountImages[0].h()
-        self.screenpos += mountMoveSize
-        if(move):
-            self.game._display_surf.blit(self.levelMount.mountImages[0]._image_surf, (int(
-                            self.game.windowSize[0]/2 - self.levelMount.mountImages[0].w()/2), self.screenpos))
+    def objectSelect(self):    
+        for i in self.others:
+            if i.position >= self.game.windowSize[1]:
+                self.others.remove(i)
 
-    def levelRender(self):
-        self.walkSound = self.soundSelect()
+        i = random.randint(0,len(self.levelMount.other)-1)
+        if (self.levelMount.other[i] not in self.others):
+            self.others.append(self.levelMount.other[i])
+
+    def SceneRender(self, sky, other, oPos, path, mount, mountPos, resizeStep):
+        self.game._display_surf.blit(sky._image_surf, ((self.game.windowSize[0]/2) - sky.w()/2, sky.position))
+        for p in path:
+            self.game._display_surf.blit(p._image_surf, (self.game.windowSize[0]/2 - p.w()/2, p.position))
+        for m in mount:
+            #if(resizeStep > 1):
+               # m._image_surf = m.resize(int(m.w()*resizeStep), int(m.h()*resizeStep))
+            m.position += mountPos
+            self.game._display_surf.blit(m._image_surf, (self.game.windowSize[0]/2 - m.w()/2, m.position))
+        for o in other:
+           # if(resizeStep > 1):
+            #    o._image_surf = o.resize(o.w()*4*resizeStep, o.h()*4*resizeStep)
+            o.position += oPos
+            self.game._display_surf.blit(o._image_surf, (self.game.windowSize[0]/2 - o.w()/2, o.position))
+
+    def textRender(self):
         try:
             falltxt = displaylib.font(20, ("Fall: {0:.2f} m".format(self.fallLength)), [
                 255, 255, 255], False)
@@ -291,27 +308,28 @@ class level:
                 20, "Fall: 0 m", [255, 255, 255], False)
             healthtxt = displaylib.font(
                 20, "Health: 100", [255, 255, 255], False)
-
-
-        self.game._display_surf.fill([0, 0, 0])
-
-
         self.game._display_surf.blit(posText.text_surf, ((
-                self.game.windowSize[0] - self.levelMount.images[0].w()), 0))
+                self.game.windowSize[0]), 0))
         self.game._display_surf.blit(falltxt.text_surf, ((
-            self.game.windowSize[0] - self.levelMount.images[0].w()), 20))
+            self.game.windowSize[0] ), 20))
         self.game._display_surf.blit(healthtxt.text_surf, ((
-            self.game.windowSize[0] - self.levelMount.images[0].w()), 40))
+            self.game.windowSize[0] ), 40))
+
+    def levelRender(self):
+        self.walkSound = self.soundSelect()
+        
+        self.game._display_surf.fill([0, 0, 0])
+        self.objectSelect()
+        self.textRender()
 
         if(self.walkswitch == self.prevwalkswitch):
-            self.game._display_surf.blit(self.levelMount.images[0]._image_surf, (int(
-                        self.game.windowSize[0]/2 - self.levelMount.images[0].w()/2), 0))
+            self.SceneRender(self.levelMount.skyImage, self.others, 0 , [self.levelMount.pathImages[self.levelMount.mountArea]], [self.levelMount.mountImages[self.levelMount.mountArea]], 0 ,1 )
             self.walksequence[self.walkswitch].lastImage()
             pygame.display.update()
         else:
-            self.walkSound.sound.play()
+            self.walkSound.sound.play() 
             for i in self.walksequence[self.walkswitch].sequence:
-               
+                self.SceneRender(self.levelMount.skyImage, self.others, self.moveSize*4 , [self.levelMount.pathImages[self.levelMount.mountArea]], [self.levelMount.mountImages[self.levelMount.mountArea]], self.moveSize , 1.1 )
                 self.walksequence[self.walkswitch].renderAnim(i)
                 pygame.display.update()
             
@@ -320,6 +338,7 @@ class level:
         self.play = True
         self.levelMount = self.mounts[select]
         self.stepsize = self.levelMount.routeLength/10
+        self.moveSize = self.levelMount.mountImages[self.levelMount.mountArea].h()/self.stepsize
         self.newchar.setPosition(0)
         self.screenpos = 0
 

@@ -2,7 +2,7 @@ import pygame
 import os
 import sys
 import random
-import AsscensionLib
+import renderingplay
 import displaylib
 import eventhandle
 
@@ -29,7 +29,7 @@ class Game:
             self._display_surf.get_width(), self._display_surf.get_height()]
         self._running = True
         self.openingMusic = displaylib.music(displaylib.getpath("../assets","tobias_weber_-_Between_Worlds_(Instrumental).mp3"))
-        self.openingScreen = displaylib.image("ascensionopenscreen.png")
+        self.openingScreen = displaylib.image("ascensionopenscreen.png", 0)
         self.Ascensiontitletext = displaylib.font(
             75, "Ascension", (0, 0, 0), False)
         self.startleveltext = displaylib.font(
@@ -46,7 +46,7 @@ class Game:
             pygame.display.flip()
             self.openingScreen._image_surf = pygame.transform.scale(
                 self.openingScreen._image_surf, (self.windowSize[0], self.windowSize[1]))
-            self._display_surf.blit(self.openingScreen._image_surf, (0, 0))
+            self._display_surf.blit(self.openingScreen._image_surf, (0, self.openingScreen.position))
             self._display_surf.blit(
                 self.Ascensiontitletext.text_surf, (20, 20))
             self._display_surf.blit(self.startleveltext.text_surf,

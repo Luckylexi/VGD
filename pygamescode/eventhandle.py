@@ -1,9 +1,9 @@
 import pygame
 import random
-import AsscensionLib
+import renderingplay
 import Ascension
 
-from AsscensionLib import *
+from renderingplay import *
 from pygame.locals import *
 
 
@@ -30,7 +30,7 @@ class CEvent:
                     else:
                         level.walkswitch = 0
                     char.setPosition(
-                        (char.getPosition()+(level.levelMount.routeLength/10)))
+                        (char.getPosition()+(level.stepsize)))
                     return random.randint(0, 100)
         elif event.key == pygame.K_RETURN:
             if(level != None):
@@ -46,7 +46,7 @@ class CEvent:
             elif(game.onHomeScreen == True):
                 print("got here")
                 game.openingMusic.stop()
-                self.beginner = AsscensionLib.level("beginning", game)
+                self.beginner = renderingplay.level("beginning", game)
                 self.beginner.on_init()
                 game.onHomeScreen = False
                 self.beginner.run_level(0)
