@@ -250,7 +250,6 @@ class level:
         self.play = False
         self.win = True
         self.newchar.mountsClimbed += 1
-        self.newchar.setHealth(100)
         self.newchar.setPosition(0)
         path = displaylib.getpath("../Assets", "success.png")
         winim = displaylib.image(path)
