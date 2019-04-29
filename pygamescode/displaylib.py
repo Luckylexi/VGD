@@ -78,7 +78,8 @@ class sound:
         try:
             self.sound = pygame.mixer.Sound(fileName)
         except:
-            print(f"Could not load {0}, pygame error: {1}", fileName, pygame.get_error())
+            print("sound Error")
+            #print(f"Could not load {0}, pygame error: {1}", fileName, pygame.get_error())
 
 class music:
     def __init__(self, fileName):
@@ -86,14 +87,17 @@ class music:
         try:
             pygame.mixer.music.load(self.fileName)
         except:
-            print(f"Could not load {0}, pygame error: {1}", self.fileName, pygame.get_error())
+            print("sound Error")
+            #print(f"Could not load {0}, pygame error: {1}", self.fileName, pygame.get_error())
     def play(self, loop=-1):
         try:
             pygame.mixer.music.play(loop)
         except:
-            print(f"Could not play {0}, pygame error: {1}", self.fileName, pygame.get_error())
+            print("sound Error")
+            #print(f"Could not play {0}, pygame error: {1}", self.fileName, pygame.get_error())
     def stop(self):
         try:
             pygame.mixer.music.stop()
         except:
-            print(f"Could not stop {0}, pygame error: {1}", self.fileName, pygame.get_error())
+            print("sound Error")
+            #print(f"Could not stop {0}, pygame error: {1}", self.fileName, pygame.get_error())

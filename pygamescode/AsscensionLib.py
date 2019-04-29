@@ -204,7 +204,7 @@ class level:
     def on_init(self):
         try:
             levelList = []
-            path = displaylib.getpath("../assets", "mountains.txt")
+            path = displaylib.getpath("../Assets", "mountains.txt")
             with open(path, "r") as self.fallLength:
                 for line in self.fallLength:
                     levelList.append(line.rstrip('\n'))
@@ -226,12 +226,12 @@ class level:
             self.walksequence.append(displaylib.animation(self.game, self, [self.newchar.images[0], self.newchar.images[1], self.newchar.images[2], self.newchar.images[3]],0.1))
             self.walksequence.append(displaylib.animation(self.game, self, [self.newchar.images[4], self.newchar.images[5], self.newchar.images[6]],0.1))
         except:
-            self.walksequence.append(displaylib.image(displaylib.getpath("../assets","leftfoot.png")))
-            self.walksequence.append(displaylib.image(displaylib.getpath("../assets","rightfoot.png")))
+            self.walksequence.append(displaylib.image(displaylib.getpath("../Assets","leftfoot.png")))
+            self.walksequence.append(displaylib.image(displaylib.getpath("../Assets","rightfoot.png")))
 
         try:
             Ws = []
-            path = displaylib.getpath("../assets", "walksounds.txt")
+            path = displaylib.getpath("../Assets", "walksounds.txt")
             with open(path, "r") as f:
                 for line in f:
                     Ws.append(line.rstrip('\n'))
@@ -239,7 +239,7 @@ class level:
             print("could not load walking sounds")
 
         for i in Ws:
-            path = displaylib.getpath("../assets", i)
+            path = displaylib.getpath("../Assets", i)
             newSound = displaylib.sound(path)
             self.walksounds.append(newSound)
     def levelSelect(self):
