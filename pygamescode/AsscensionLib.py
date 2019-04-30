@@ -173,10 +173,10 @@ class Progress:
 
 
     def calcRestProg(self, climber):
-        self.climber = climber
-        print("Player health.. " + str(self.climber.getHealth()))
+        self.climber = climber.getHealth()
+        print("Player health.. " + str(self.climber))
         print("Player resting... + 5 hp..")
-        self.climberHealth += self.climber.getHealth() + 5
+        self.climberHealth = self.climber + 5
         return self.climberHealth
 
     def getProgress(self):
