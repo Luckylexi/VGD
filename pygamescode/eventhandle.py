@@ -37,7 +37,7 @@ class CEvent:
                 if(level.play == False):
                     if(level.isResting == True):
                     #    if(char.getHealth() <= 100): # What if Character is over 100?
-                            prog.calcRestProg(char) # +5 Hp
+                        prog.calcRestProg(char) # +5 Hp
                         #elif(char.getHealth() >= 100):
                             #char.setHealth(100)
             except:
