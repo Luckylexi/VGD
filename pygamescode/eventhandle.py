@@ -35,10 +35,11 @@ class CEvent:
         elif event.key == pygame.K_h:
             try:
                 if(level.play == False):
-                    if(char.getHealth() <= 100): # What if Character is over 100?
-                        prog.calcRestProg(char) # +5 Hp
-                    elif(char.getHealth() >= 100):
-                        char.setHealth(100)
+                    if(level.isResting == True):
+                    #    if(char.getHealth() <= 100): # What if Character is over 100?
+                            prog.calcRestProg(char) # +5 Hp
+                        #elif(char.getHealth() >= 100):
+                            #char.setHealth(100)
             except:
                 print("Cannot heal, currently on a mountain..")
         elif event.key == pygame.K_RETURN:
