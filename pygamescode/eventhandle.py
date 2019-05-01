@@ -1,9 +1,9 @@
 import pygame
 import random
-import AsscensionLib
+import AscensionLib
 import Ascension
 
-from AsscensionLib import *
+from AscensionLib import *
 from pygame.locals import *
 
 
@@ -17,21 +17,25 @@ class CEvent:
     def on_input_blur(self):
         pass
 
-    def on_key_down(self, event, game, char, level):
+    def on_key_down(self, event, game, char, level, prog):
         #keys = [pygame.K_KP_ENTER]
         if event.key == pygame.K_SPACE:
             if(level != None):
                 if(level.play == True):
                     if(level.walkswitch == 0):
                         level.walkswitch = 1
-                        
                     elif(level.walkswitch == 1):
                         level.walkswitch = 0
                     else:
                         level.walkswitch = 0
-                    char.setPosition(
-                        (char.getPosition()+(level.levelMount.routeLength/10)))
+                    char.setPosition((char.getPosition()+(level.levelMount.routeLength/10)))
+                    prog.calcProg(char, level.levelMount)
                     return random.randint(0, 100)
+        elif event.key == pygame.K_h:
+            if(level != None):
+                if(level.play == True):
+                    if(char.getHealth <= 100): # What if Character is over 100?
+                        char.calcRestProg(char) # +5 HP
         elif event.key == pygame.K_RETURN:
             if(level != None):
                 if(level.play == True):
@@ -48,8 +52,7 @@ class CEvent:
                 game.openingMusic.stop()
                 self.beginner = AsscensionLib.level("beginning", game)
                 self.beginner.on_init()
-                game.onHomeScreen = False
-                self.beginner.run_level(0)
+                game.on_render()
             else:
                 game.onHomeScreen = True
                 game.on_render()
@@ -90,7 +93,7 @@ class CEvent:
     def on_user(self, event):
         pass
 
-    def on_event(self, event, game, char, level):
+    def on_event(self, event, game, char, level, prog):
         if event.type == QUIT:
             self.on_exit(game, level)
 
@@ -107,7 +110,7 @@ class CEvent:
             self.on_key_up(event)
 
         elif event.type == KEYDOWN:
-            i = self.on_key_down(event, game, char, level)
+            i = self.on_key_down(event, game, char, level, prog)
             return i
 
         elif event.type == ACTIVEEVENT:

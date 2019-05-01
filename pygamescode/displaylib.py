@@ -70,7 +70,6 @@ class font:
         self.f.set_underline(underline)
         self.text_surf = self.f.render(textline, True, color)
 
-
 class sound:
     def __init__(self, fileName):
         self.fileName = fileName
