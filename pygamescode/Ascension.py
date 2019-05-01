@@ -1,3 +1,4 @@
+
 import pygame
 import os
 import sys
@@ -66,7 +67,7 @@ class Game:
         while(self._running):
             #pygame.event.post(pygame.event.Event(2))
             for event in pygame.event.get():
-                self.ev.on_event(event, theGame, None, None)
+                self.ev.on_event(event, theGame, None, None, None)
             self.on_render()
         self.on_cleanup()
 

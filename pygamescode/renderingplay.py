@@ -283,13 +283,13 @@ class level:
         for p in path:
             self.game._display_surf.blit(p._image_surf, (self.game.windowSize[0]/2 - p.w()/2, p.position))
         for m in mount:
-            #if(resizeStep > 1):
-               # m._image_surf = m.resize(int(m.w()*resizeStep), int(m.h()*resizeStep))
+            if(resizeStep > 1):
+                    m._image_surf = m.resize(int(m.w()*resizeStep), int(m.h()*resizeStep))
             m.position += mountPos
             self.game._display_surf.blit(m._image_surf, (self.game.windowSize[0]/2 - m.w()/2, m.position))
         for o in other:
-           # if(resizeStep > 1):
-            #    o._image_surf = o.resize(o.w()*4*resizeStep, o.h()*4*resizeStep)
+            if(resizeStep > 1):
+                    o._image_surf = o.resize(int(o.w()*4*resizeStep), int(o.h()*4*resizeStep))
             o.position += oPos
             self.game._display_surf.blit(o._image_surf, (self.game.windowSize[0]/2 - o.w()/2, o.position))
 
