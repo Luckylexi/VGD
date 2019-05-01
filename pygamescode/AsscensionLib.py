@@ -177,7 +177,7 @@ class Progress:
         print("Player health.. " + str(self.climber))
         print("Player resting... + 5 hp..")
         self.climberHealth = self.climber + 5
-        climber.setHealth(self.climberHealth)
+        #climber.setHealth(self.climberHealth)
         return self.climberHealth
 
     def getProgress(self):
@@ -296,7 +296,7 @@ class level:
 
     def rest(self, ev, climber):
         self.isResting = True
-        #try:
+    #try:
         while(self.isResting):
             for event in pygame.event.get():
                 ev.on_event(event, self.game, self.newchar, self, self.progress)
@@ -306,13 +306,13 @@ class level:
                     self.isResting = False
                 else:
                     if(climber.getHealth() <= 100):
-                        #pygame.time.delay(1000)
+                        pygame.time.delay(1000)
                         self.res = self.progress.calcRestProg(climber)
                         print("Resting Players Health... " + str(self.res))
                         #print("Resting time passed... " + str(self.clock.get_time()))
-                        return self.res
-        #except:
-        #    print("unable to calculate resting progress.. " + pygame.get_error())
+                        #return self.res
+    #except:
+    #    print("unable to calculate resting progress.. " + pygame.get_error())
 
 
         #self.restMount = self.mounts[mount]
