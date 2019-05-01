@@ -177,6 +177,7 @@ class Progress:
         print("Player health.. " + str(self.climber))
         print("Player resting... + 5 hp..")
         self.climberHealth = self.climber + 5
+        climber.setHealth(self.climberHealth)
         return self.climberHealth
 
     def getProgress(self):
