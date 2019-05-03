@@ -175,9 +175,9 @@ class Progress:
     def calcRestProg(self, climber):
         self.climber = climber.getHealth()
         print("Player health.. " + str(self.climber))
-        print("Player resting... + 5 hp..")
+        print("Player resting... Calculating Resting Progress... + 5 hp..")
         self.climberHealth = self.climber + 5
-        #climber.setHealth(self.climberHealth)
+        climber.setHealth(self.climberHealth)
         return self.climberHealth
 
     def getProgress(self):
@@ -294,23 +294,24 @@ class level:
             if(self.game.onHomeScreen == True):
                 break
 
-    def rest(self, ev, climber):
+    def rest(self, climber):
         self.isResting = True
     #try:
         while(self.isResting):
-            for event in pygame.event.get():
-                ev.on_event(event, self.game, self.newchar, self, self.progress)
+            #for event in pygame.event.get():
+            #    ev.on_event(event, self.game, self.newchar, self, self.progress)
                 if(climber.getHealth() >= 100):
                     print("Climber's Health is already at Max ")
                     climber.setHealth(100)
                     self.isResting = False
+                    return climber.getHealth()
                 else:
-                    if(climber.getHealth() <= 100):
-                        pygame.time.delay(1000)
-                        self.res = self.progress.calcRestProg(climber)
-                        print("Resting Players Health... " + str(self.res))
+                    #if(climber.getHealth() <= 100):
+                    pygame.time.delay(1000)
+                    self.res = self.progress.calcRestProg(climber)
+                    print("Resting Players Health... " + str(self.res))
                         #print("Resting time passed... " + str(self.clock.get_time()))
-                        #return self.res
+                    return self.res
     #except:
     #    print("unable to calculate resting progress.. " + pygame.get_error())
 
@@ -386,7 +387,7 @@ class level:
             while not self.dead:
                 if(self.newchar.position >= self.levelMount.routeLength):
                     self.success(ev, self.levelMount)
-                    self.rest(ev, self.newchar)
+                    self.rest(self.newchar)
                     break
                 else:
                     self.levelRender()
