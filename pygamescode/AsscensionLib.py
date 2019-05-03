@@ -306,12 +306,13 @@ class level:
                     self.isResting = False
                     return climber.getHealth()
                 else:
+                    while(climber.getHealth() < 100):
                     #if(climber.getHealth() <= 100):
-                    pygame.time.delay(1000)
-                    self.res = self.progress.calcRestProg(climber)
-                    print("Resting Players Health... " + str(self.res))
+                        pygame.time.delay(1000)
+                        self.res = self.progress.calcRestProg(climber)
+                        print("Resting Players Health... " + str(self.res))
                         #print("Resting time passed... " + str(self.clock.get_time()))
-                    return self.res
+                        climber.setHealth(self.res)
     #except:
     #    print("unable to calculate resting progress.. " + pygame.get_error())
 
