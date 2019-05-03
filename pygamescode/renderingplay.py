@@ -81,7 +81,7 @@ class Mountain:
                         nwIm._image_surf, (int(w), Game.windowSize[1]))
                     if("path" in path):
                         self.pathImages.append(nwIm)
-                    elif("Sky" in path):
+                    elif("sky" in path):
                         self.skyImage = nwIm
                     elif(self.name.replace(" ","") in path):
                         self.mountImages.append(nwIm)
@@ -154,6 +154,38 @@ class smallScreen:
     def on_init(self):
         self.imageMap = self.mountain.images[0]
 
+class Progress:
+    def __init__(self, mount, climber):
+        self.mountain = mount
+        self.cpos = 0
+        self.Cprogress = 0
+        self.mountmax = 0
+        self.climber = climber
+
+    def on_init(self):
+        #self.cpos = self.climber.getPosition()
+        #self.mountmax = self.mountain.getRouteLength()
+        self.Cprogress = 0
+        print("Progress max mountain length = " +str(self.mountmax))
+        print("Progress player position = " + str(self.cpos))
+        #self.Cprogress = self.cpos / mountmax    #may not update tho
+
+    def calcProg(self, climber, mount):
+        try:
+            self.cpos = climber.getPosition()
+            self.mountmax = mount.getRouteLength()
+            self.Cprogress = self.cpos / self.mountmax *100
+            print(self.Cprogress)
+        except:
+            print("Could not Calc progress")
+
+    def calcRestProg(self, climber):
+        self.climberHealth = self.climber.getHealth() + 5
+        return self.climberHealth
+
+    def getProgress(self):
+        return self.Cprogress
+
 class level:
     def __init__(self, name, game):
         self.clock = pygame.time.Clock()
@@ -167,6 +199,7 @@ class level:
 
         self.dead = False
         self.win = False
+        self.progress = None
         self.game = game
 
         self.resear = []
@@ -233,7 +266,7 @@ class level:
 
         while (True):
             for event in pygame.event.get():
-                ev.on_event(event, self.game, self.newchar, self)
+                ev.on_event(event, self.game, self.newchar, self.progress)
                 self.game._display_surf.fill([0, 0, 0])
                 self.game._display_surf.blit(mounttext.text_surf, ((
                     self.game.windowSize[0]/2 - mounttext.text_surf.get_width()), self.game.windowSize[1]/2))
@@ -274,7 +307,7 @@ class level:
             if i.position >= self.game.windowSize[1]:
                 self.others.remove(i)
 
-        i = random.randint(0,len(self.levelMount.other)-1)
+        i = random.randint(0, len(self.levelMount.other)-1)
         if (self.levelMount.other[i] not in self.others):
             self.others.append(self.levelMount.other[i])
 
@@ -301,6 +334,7 @@ class level:
                 self.newchar.health)), [255, 255, 255], False)
             posText = displaylib.font(
                 20, ("Position: {0:.2f} m".format(self.newchar.position)), [255, 255, 255], False)
+            progText = displaylib.font(25, ("Progress: {0:.1f} %".format(self.progress.getProgress())), [255,255,255], False)
         except:
             posText = displaylib.font(
                 20, "Position: 0 m", [255, 255, 255], False)
@@ -308,13 +342,16 @@ class level:
                 20, "Fall: 0 m", [255, 255, 255], False)
             healthtxt = displaylib.font(
                 20, "Health: 100", [255, 255, 255], False)
+            progText = displaylib.font(25, "Progress: 0.0 %", [255, 255, 255], False)
+        
         self.game._display_surf.blit(posText.text_surf, ((
                 self.game.windowSize[0]), 0))
         self.game._display_surf.blit(falltxt.text_surf, ((
             self.game.windowSize[0] ), 20))
         self.game._display_surf.blit(healthtxt.text_surf, ((
             self.game.windowSize[0] ), 40))
-
+        self.game._display_surf.blit(progText.text_surf, ((self.game.windowSize[0]), 680))
+   
     def levelRender(self):
         self.walkSound = self.soundSelect()
         
@@ -345,6 +382,10 @@ class level:
         ev = eventhandle.CEvent()
         self.walkswitch = 0
         self.prevwalkswitch = self.walkswitch
+
+        self.progress = Progress(self.levelMount, self.newchar)
+        self.progress.on_init()
+
         self.fallLength = None
         self.clock.tick_busy_loop()
         while self.play:
@@ -356,7 +397,7 @@ class level:
                     self.levelRender()
                     self.prevwalkswitch = self.walkswitch
                     for event in pygame.event.get():
-                        i = ev.on_event(event, self.game, self.newchar, self)
+                        i = ev.on_event(event, self.game, self)
                         if(self.dead == True):
                             break
                         if(i != None):

@@ -37,11 +37,12 @@ class image:
         return h
 
     def resize(self, xSize, ySize):
-        try:
-            self._image_surf = pygame.transform.smoothscale(self._image_surf, (xSize, ySize))
-        except:
-            print(f"Could not resize {0}", self.fileName)
-            print(pygame.get_error())
+        if((xSize != self.w()) or (ySize!= self.h())):
+            try:
+                self._image_surf = pygame.transform.scale(self._image_surf, (int(xSize), int(ySize)))
+            except:
+                print(f"Could not resize {0}", self.fileName)
+                print(pygame.get_error())
 
 class animation:
     def __init__(self, g, l, images, timing):
