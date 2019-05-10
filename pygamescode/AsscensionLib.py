@@ -314,8 +314,9 @@ class level:
                     while(climber.getHealth() < 100):
                         resttxt = displaylib.font(20, "Your Health... " + str(climber.getHealth()), (255,255,255), True)
                         self.game._display_surf.fill([0, 0, 0])
+                        w = (self.game.windowSize[1]/restimage.h() * 0.9) * restimage.w()
                         restimage._image_surf = pygame.transform.scale(
-                            restimage._image_surf, (self.game.windowSize[0], self.game.windowSize[1]))
+                            restimage._image_surf, (int(w), int(self.game.windowSize[1] * .9)))
                         self.game._display_surf.blit(restimage._image_surf, (0, 0))
                         self.game._display_surf.blit(mnttxt.text_surf,
                         ((self.game.windowSize[0]/2 - mnttxt.text_surf.get_width()), self.game.windowSize[1]/2))
