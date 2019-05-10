@@ -1,5 +1,6 @@
 import os
 import sys
+import copy
 import pygame
 import random
 import eventhandle
@@ -53,17 +54,19 @@ def fall(char, mount, chance):
         return 0
 
 class Mountain:
-    def __init__(self, name, height, difficultyoverall, routelength, difficulties):
+    def __init__(self, name, height, difficultyoverall, routelength, difficulties, renderOther):
         self.name = name
         self.height = height
         self.difficulty = difficultyoverall
         self.routeLength = routelength
         self.diff = difficulties
         self.stepdiff = []
+        self.prevMountArea = 0
         self.mountArea = 0
         self.skyImage = None
         self.mountImages = []
         self.pathImages = []
+        self.renderOther = renderOther
         self.other = []
 
     def on_init(self, Game):
@@ -76,14 +79,14 @@ class Mountain:
                     path = displaylib.getpath("../Assets", line)
                     nwIm = displaylib.image(path,0)
                     #nwIm._image_surf = pygame.transform.smoothscale(nwIm._image_surf, ((1366/2),768))
-                    w = (Game.windowSize[1]/nwIm.h()) * nwIm.w()
+                    w = (Game.windowSize[1]/nwIm.h()*.9) * nwIm.w()
                     nwIm._image_surf = pygame.transform.smoothscale(
-                        nwIm._image_surf, (int(w), Game.windowSize[1]))
+                        nwIm._image_surf, (int(w), int(Game.windowSize[1]*.9)))
                     if("path" in path):
                         self.pathImages.append(nwIm)
                     elif("sky" in path):
                         self.skyImage = nwIm
-                    elif(self.name.replace(" ","") in path):
+                    elif(("/" + self.name.replace(" ","")) in path):
                         self.mountImages.append(nwIm)
                     else:
                         self.other.append(nwIm)
@@ -129,9 +132,9 @@ class climber:
                 path = displaylib.getpath("../Assets", i)
                 nImage = displaylib.image(path, 0)
                 if (nImage._image_surf != None):
-                    w = (self.game.windowSize[1]/nImage.h()) * nImage.w() 
+                    w = (self.game.windowSize[1]/nImage.h() *.9) * nImage.w()
                     nImage._image_surf = pygame.transform.smoothscale(
-                        nImage._image_surf, (int(w), self.game.windowSize[1]))
+                        nImage._image_surf, (int(w), int(self.game.windowSize[1]*.9)))
                     self.images.append(nImage)
 
     def getPosition(self):
@@ -228,8 +231,9 @@ class level:
             difficulty = float(info[2].rstrip('\n'))
             routelen = float(info[3].rstrip('\n'))
             diffs = info[4].rstrip('\n')
+            otherRendering = info[5].rstrip('\n').split(",")
             #diffs = [ x[0] for x in info[4]]
-            mount = Mountain(name, height, difficulty, routelen, diffs)
+            mount = Mountain(name, height, difficulty, routelen, diffs, otherRendering)
             mount.on_init(self.game)
             self.mounts.append(mount)
             self.resear.append(0)
@@ -266,7 +270,7 @@ class level:
 
         while (True):
             for event in pygame.event.get():
-                ev.on_event(event, self.game, self.newchar, self.progress)
+                ev.on_event(event, self.game, self)
                 self.game._display_surf.fill([0, 0, 0])
                 self.game._display_surf.blit(mounttext.text_surf, ((
                     self.game.windowSize[0]/2 - mounttext.text_surf.get_width()), self.game.windowSize[1]/2))
@@ -278,7 +282,7 @@ class level:
             if(self.game.onHomeScreen == True):
                 break
 
-    def death(self):
+    def death(self, ev):
         self.play = False
         self.dead = True
         self.newchar.position = 0
@@ -288,6 +292,7 @@ class level:
             36, "You have died", (255, 255, 255), False)
         while (True):
             for event in pygame.event.get():
+                ev.on_event(event, self.game, self)
                 self.game._display_surf.fill([0, 0, 0])
                 self.game._display_surf.blit(
                     deathtext.text_surf, (self.game.windowSize[0]/2, self.game.windowSize[1]/2))
@@ -302,30 +307,41 @@ class level:
         i = random.randint(1,len(self.walksounds))
         return self.walksounds[i-1]
 
-    def objectSelect(self):    
+    def objectSelect(self, new):
+        if(new): 
+            i = random.randint(0, len(self.levelMount.other)-1)
+            if(copy.copy(self.levelMount.other[i]) not in self.others):
+                self.levelMount.other[1].position = -200
+                self.others.append(copy.copy(self.levelMount.other[i]))
+                self.others.sort(key=lambda x: x.position, reverse = False)
+
         for i in self.others:
-            if i.position >= self.game.windowSize[1]:
+            '''rec = i._image_surf.get_rect()
+            recSurf = pygame.Surface((int(rec.w), int(rec.h)))
+            recSurf.fill([100,0,0])
+            self.game._display_surf.fill([100,100,100])
+            self.game._display_surf.blit(recSurf, (rec.x, rec.y))
+            pygame.display.update()'''
+            if (self.levelMount.prevMountArea != self.levelMount.mountArea):
+                self.others.clear()
+            elif (i.position >= self.game.windowSize[1]-(self.game.windowSize[1]/4)):
                 self.others.remove(i)
 
-        i = random.randint(0, len(self.levelMount.other)-1)
-        if (self.levelMount.other[i] not in self.others):
-            self.others.append(self.levelMount.other[i])
-
     def SceneRender(self, sky, other, oPos, path, mount, mountPos, resizeStep):
-        self.game._display_surf.blit(sky._image_surf, ((self.game.windowSize[0]/2) - sky.w()/2, sky.position))
+        self.game._display_surf.blit(sky._image_surf, ((self.game.windowSize[0]/2) - sky.w()/2, sky.position + self.game.windowSize[1]*.05))
         for p in path:
-            self.game._display_surf.blit(p._image_surf, (self.game.windowSize[0]/2 - p.w()/2, p.position))
+            self.game._display_surf.blit(p._image_surf, (self.game.windowSize[0]/2 - p.w()/2, p.position + self.game.windowSize[1]*.05))
         for m in mount:
             if(resizeStep > 1):
-                    m._image_surf = m.resize(int(m.w()*resizeStep), int(m.h()*resizeStep))
+                    m.resizeSurf = m.resize(int(m.w()*(resizeStep ** m.resizelevel)), int(m.h()*(resizeStep ** m.resizelevel)))
             m.position += mountPos
-            self.game._display_surf.blit(m._image_surf, (self.game.windowSize[0]/2 - m.w()/2, m.position))
+            self.game._display_surf.blit(m.resizeSurf, (self.game.windowSize[0]/2 - m.w()/2, m.position + self.game.windowSize[1]*.05))
         for o in other:
             if(resizeStep > 1):
-                    o._image_surf = o.resize(int(o.w()*4*resizeStep), int(o.h()*4*resizeStep))
+                    o.resizeSurf = o.resize(int(o.w()*(resizeStep ** o.resizelevel)), int(o.h()*(resizeStep ** o.resizelevel)))
+            self.game._display_surf.blit(o.resizeSurf, (self.game.windowSize[0]/2 - o.w()/2, o.position + self.game.windowSize[1]*.05))
             o.position += oPos
-            self.game._display_surf.blit(o._image_surf, (self.game.windowSize[0]/2 - o.w()/2, o.position))
-
+          
     def textRender(self):
         try:
             falltxt = displaylib.font(20, ("Fall: {0:.2f} m".format(self.fallLength)), [
@@ -345,29 +361,44 @@ class level:
             progText = displaylib.font(25, "Progress: 0.0 %", [255, 255, 255], False)
         
         self.game._display_surf.blit(posText.text_surf, ((
-                self.game.windowSize[0]), 0))
+                self.game.windowSize[0]/2), 0))
         self.game._display_surf.blit(falltxt.text_surf, ((
-            self.game.windowSize[0] ), 20))
+            self.game.windowSize[0]/2 ), 20))
         self.game._display_surf.blit(healthtxt.text_surf, ((
-            self.game.windowSize[0] ), 40))
-        self.game._display_surf.blit(progText.text_surf, ((self.game.windowSize[0]), 680))
+            self.game.windowSize[0]/2 ), 40))
+        self.game._display_surf.blit(progText.text_surf, ((self.game.windowSize[0]/2), 680))
    
     def levelRender(self):
         self.walkSound = self.soundSelect()
-        
         self.game._display_surf.fill([0, 0, 0])
-        self.objectSelect()
-        self.textRender()
-
+        
+        covSurf1 = pygame.Surface(((self.game.windowSize[0]/2 - self.levelMount.pathImages[self.levelMount.mountArea].w()/2),self.game.windowSize[1]))
+        covSurf2 = pygame.Surface(((self.game.windowSize[0]/2 - self.levelMount.pathImages[self.levelMount.mountArea].w()/2, self.game.windowSize[1] * 0.06)))
+        covSurf1.fill([0,0,0])
+        covSurf2.fill([0,0,0])
         if(self.walkswitch == self.prevwalkswitch):
             self.SceneRender(self.levelMount.skyImage, self.others, 0 , [self.levelMount.pathImages[self.levelMount.mountArea]], [self.levelMount.mountImages[self.levelMount.mountArea]], 0 ,1 )
             self.walksequence[self.walkswitch].lastImage()
+            self.game._display_surf.blit(covSurf1, (0,0))
+            self.game._display_surf.blit(covSurf1, (self.game.windowSize[0]/2 + self.levelMount.pathImages[self.levelMount.mountArea].w()/2,0))
+            self.game._display_surf.blit(covSurf2, (self.game.windowSize[0]/2 - self.levelMount.pathImages[self.levelMount.mountArea].w()/2, self.game.windowSize[1]*.05 + self.levelMount.pathImages[self.levelMount.mountArea].h() ))
+            self.textRender()
             pygame.display.update()
         else:
-            self.walkSound.sound.play() 
+            if('T' in self.levelMount.renderOther[self.levelMount.mountArea]):
+                self.objectSelect(True)
+            else:
+                self.objectSelect(False)
+
+            self.walkSound.sound.play()
+            self.SceneRender(self.levelMount.skyImage, self.others, (self.moveSize*3) , [self.levelMount.pathImages[self.levelMount.mountArea]], [self.levelMount.mountImages[self.levelMount.mountArea]], (self.moveSize*.01) , 1.01 )
             for i in self.walksequence[self.walkswitch].sequence:
-                self.SceneRender(self.levelMount.skyImage, self.others, self.moveSize*4 , [self.levelMount.pathImages[self.levelMount.mountArea]], [self.levelMount.mountImages[self.levelMount.mountArea]], self.moveSize , 1.1 )
+                self.SceneRender(self.levelMount.skyImage, self.others, 0 , [self.levelMount.pathImages[self.levelMount.mountArea]], [self.levelMount.mountImages[self.levelMount.mountArea]], 0 ,1 )
                 self.walksequence[self.walkswitch].renderAnim(i)
+                self.game._display_surf.blit(covSurf1, (0,0))
+                self.game._display_surf.blit(covSurf1, (self.game.windowSize[0]/2 + self.levelMount.pathImages[self.levelMount.mountArea].w()/2,0))
+                self.game._display_surf.blit(covSurf2, (self.game.windowSize[0]/2 - self.levelMount.pathImages[self.levelMount.mountArea].w()/2, self.game.windowSize[1]*.05 + self.levelMount.pathImages[self.levelMount.mountArea].h() ))
+                self.textRender()
                 pygame.display.update()
             
     def run_level(self, select):
@@ -375,7 +406,7 @@ class level:
         self.play = True
         self.levelMount = self.mounts[select]
         self.stepsize = self.levelMount.routeLength/10
-        self.moveSize = self.levelMount.mountImages[self.levelMount.mountArea].h()/self.stepsize
+        self.moveSize = (self.levelMount.mountImages[self.levelMount.mountArea].h()/self.stepsize) * 100
         self.newchar.setPosition(0)
         self.screenpos = 0
 
@@ -388,6 +419,7 @@ class level:
 
         self.fallLength = None
         self.clock.tick_busy_loop()
+
         while self.play:
             while not self.dead:
                 if(self.newchar.position >= self.levelMount.routeLength):
@@ -396,6 +428,7 @@ class level:
                 else:
                     self.levelRender()
                     self.prevwalkswitch = self.walkswitch
+                    self.levelMount.prevMountArea = self.levelMount.mountArea
                     for event in pygame.event.get():
                         i = ev.on_event(event, self.game, self)
                         if(self.dead == True):
@@ -404,7 +437,7 @@ class level:
                             self.fallLength = fall(
                                 self.newchar, self.levelMount, i)
                             if((self.newchar.health - self.fallLength) <= 0):
-                                self.death()
+                                self.death(ev)
                                 break
                             else:
                                 self.newchar.setHealth(
@@ -415,4 +448,4 @@ class level:
                                     self.newchar.position - self.fallLength)
                                 break
                     if(self.dead == True):
-                        break
+                        self.play = False

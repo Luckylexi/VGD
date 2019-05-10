@@ -19,9 +19,13 @@ class image:
     def __init__(self, fileName, pos):
         self.fileName = fileName
         self._image_surf = None
+        self.resizeSurf = None
         self.position = pos
         try:
-            self._image_surf = pygame.image.load(self.fileName).convert_alpha()
+            self._image_surf = pygame.image.load(self.fileName)
+            self._image_surf.convert_alpha()
+            self.resizeSurf = self._image_surf
+            self.resizelevel = 0
             # if(scalew != None and scaleh != None):
             #self._image_surf = pygame.transform.smoothscale(self._image_surf, (scalew,scaleh))
         except:
@@ -39,10 +43,13 @@ class image:
     def resize(self, xSize, ySize):
         if((xSize != self.w()) or (ySize!= self.h())):
             try:
-                self._image_surf = pygame.transform.scale(self._image_surf, (int(xSize), int(ySize)))
+                self.resizelevel += 1
+                return pygame.transform.scale(self._image_surf, (xSize, ySize))
             except:
                 print(f"Could not resize {0}", self.fileName)
                 print(pygame.get_error())
+        else:
+            return self._image_surf
 
 class animation:
     def __init__(self, g, l, images, timing):
@@ -59,7 +66,7 @@ class animation:
             self.game.windowSize[0]/2 - self.sequence[len(self.sequence) - 1].w()/2), 0))
 
     def renderAnim(self, i):
-            self.rect1 = pygame.Rect(((self.game.windowSize[0]/2 - i.w()/2), 0), ((self.game.windowSize[0]/2 + i.w()/2), i.h()))
+            self.rect1 = pygame.Rect(((self.game.windowSize[0]/2 - i.w()/2), 0), ((self.game.windowSize[0]/2 + i.w()/2), i.h()+ self.game.windowSize[1]*.05))
             try:
                 self.game._display_surf.blit(
                     i._image_surf, ((self.game.windowSize[0]/2 - i.w()/2), 0))
@@ -67,7 +74,6 @@ class animation:
                 print("Could not load image " +
                       i.fileName + " " + pygame.get_error())
             pygame.time.delay(int(self.time*1000))
-
 
 class font:
     def __init__(self, size, textline, color, underline):
@@ -78,7 +84,6 @@ class font:
             print("Could not load font " + self.file + " " + pygame.get_error())
         self.f.set_underline(underline)
         self.text_surf = self.f.render(textline, True, color)
-
 
 class sound:
     def __init__(self, fileName):

@@ -40,11 +40,10 @@ class CEvent:
         
         elif event.key == pygame.K_RETURN:
             if(level != None):
-                if(level.play == True):
-                    if(level.dead == True):
-                        game.onHomescreen = True
-                        game.openingMusic.play()
-                        game.on_render()
+                if(level.dead == True):
+                    game.onHomeScreen = True
+                    game.openingMusic.play()
+                    game.on_render()
                 elif(level.win == True):
                     game.onHomeScreen = True
                     game.openingMusic.play()
