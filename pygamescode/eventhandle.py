@@ -33,7 +33,6 @@ class CEvent:
                     prog.calcProg(char, level.levelMount)
                     return random.randint(0, 100)
         elif event.key == pygame.K_h:
-<<<<<<< HEAD
             #try:
             if(level.play == False):
                 if(level.isResting == True):
@@ -45,13 +44,6 @@ class CEvent:
 
             #except:
         #        print("Cannot heal, currently on a mountain..")
-=======
-            if(level != None):
-                if(level.play == True):
-                    if(char.getHealth <= 100): # What if Character is over 100?
-                        char.calcRestProg(char) # +5 HP
-        
->>>>>>> bb8807841428f714de2ec2f457b1df0b5c0d9ebe
         elif event.key == pygame.K_RETURN:
             if(level != None):
                 if(level.dead == True):
