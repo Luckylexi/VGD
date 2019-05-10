@@ -203,22 +203,17 @@ class level:
         self.name = name
         self.mounts = []
         self.levelMount = None
-
         self.newchar = climber("climber.txt", game)
         self.newchar.on_init()
-
         self.dead = False
         self.win = False
         self.progress = None
         self.isResting = True
         self.resnum = 0
         self.game = game
-
         self.resear = []
         self.fallLength = None
-
         self.play = False
-
         self.moveSize = 1
         #self.hud = []
         self.walksequence = []
@@ -460,14 +455,11 @@ class level:
         self.moveSize = (self.levelMount.mountImages[self.levelMount.mountArea].h()/self.stepsize) * 100
         self.newchar.setPosition(0)
         self.screenpos = 0
-
         ev = eventhandle.CEvent()
         self.walkswitch = 0
         self.prevwalkswitch = self.walkswitch
-
         self.progress = Progress(self.levelMount, self.newchar)
         self.progress.on_init()
-
         self.fallLength = None
         self.clock.tick_busy_loop()
 
