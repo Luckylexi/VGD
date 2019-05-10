@@ -3,7 +3,7 @@ import pygame
 import os
 import sys
 import random
-import renderingplay
+import AscensionLib
 import displaylib
 import eventhandle
 
