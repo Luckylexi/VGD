@@ -144,6 +144,14 @@ class smallScreen:
     def on_init(self):
         self.imageMap = self.mountain.images[0]
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+
+class level:
+    def __init__(self, name, game):
+=======
+=======
+>>>>>>> e6ede2375ce2f4399636d4f15399ae2a31a14f98
 class Progress:
     def __init__(self, mount, climber):
         self.mountain = mount
@@ -184,7 +192,12 @@ class Progress:
         return self.Cprogress
 
 class level:
+<<<<<<< HEAD
+    def __init__(self, name):
+>>>>>>> progress
+=======
     def __init__(self, name, game):
+>>>>>>> e6ede2375ce2f4399636d4f15399ae2a31a14f98
         self.clock = pygame.time.Clock()
         self.name = name
         self.mounts = []
@@ -192,13 +205,24 @@ class level:
         self.newchar.on_init()
         self.dead = False
         self.win = False
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> e6ede2375ce2f4399636d4f15399ae2a31a14f98
         self.game = None
         self.resear = []
         self.fallLength = None
         self.play = False
         self.progress = None
+<<<<<<< HEAD
+
+    def on_init(self, game):
+>>>>>>> progress
+=======
         self.isResting = True
         self.resnum = 0
+>>>>>>> e6ede2375ce2f4399636d4f15399ae2a31a14f98
         self.game = game
         self.resear = []
         self.fallLength = None
@@ -227,6 +251,10 @@ class level:
             mount.on_init(self.game)
             self.mounts.append(mount)
             self.resear.append(0)
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> e6ede2375ce2f4399636d4f15399ae2a31a14f98
         try:
             self.walksequence.append(displaylib.animation(self.game, self, [self.newchar.images[0], self.newchar.images[1], self.newchar.images[2], self.newchar.images[3]],0.1))
             self.walksequence.append(displaylib.animation(self.game, self, [self.newchar.images[4], self.newchar.images[5], self.newchar.images[6]],0.1))
@@ -247,6 +275,12 @@ class level:
             path = displaylib.getpath("../Assets", i)
             newSound = displaylib.sound(path)
             self.walksounds.append(newSound)
+<<<<<<< HEAD
+=======
+
+>>>>>>> progress
+=======
+>>>>>>> e6ede2375ce2f4399636d4f15399ae2a31a14f98
     def levelSelect(self):
         pass
 
@@ -265,7 +299,15 @@ class level:
 
         while (True):
             for event in pygame.event.get():
+<<<<<<< HEAD
+<<<<<<< HEAD
+                ev.on_event(event, self.game, self.newchar, self)
+=======
                 ev.on_event(event, self.game, self.newchar, self, self.progress)
+>>>>>>> progress
+=======
+                ev.on_event(event, self.game, self.newchar, self, self.progress)
+>>>>>>> e6ede2375ce2f4399636d4f15399ae2a31a14f98
                 self.game._display_surf.fill([0, 0, 0])
                 self.game._display_surf.blit(mounttext.text_surf, ((
                     self.game.windowSize[0]/2 - mounttext.text_surf.get_width()), self.game.windowSize[1]/2))
@@ -293,6 +335,12 @@ class level:
                 pygame.display.flip()
             if(self.game.onHomeScreen == True):
                 break
+<<<<<<< HEAD
+<<<<<<< HEAD
+        
+=======
+=======
+>>>>>>> e6ede2375ce2f4399636d4f15399ae2a31a14f98
 
     def rest(self, ev, climber, mount):
         restpath = displaylib.getpath("../Assets", "resting.png")
@@ -300,6 +348,9 @@ class level:
         mnttxt = displaylib.font(20, "Resting on " + mount.name, (255, 255, 255), True)
 
 
+<<<<<<< HEAD
+>>>>>>> progress
+=======
         self.isResting = True
     #try:
 
@@ -330,16 +381,27 @@ class level:
 #except:
     #    print("unable to calculate resting progress.. " + pygame.get_error())
 
+>>>>>>> e6ede2375ce2f4399636d4f15399ae2a31a14f98
 
     def research(self):
         pass
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> e6ede2375ce2f4399636d4f15399ae2a31a14f98
     def soundSelect(self):
         i = random.randint(1,len(self.walksounds))
         return self.walksounds[i-1]
 
     def levelRender(self):
         self.walkSound = self.soundSelect()
+<<<<<<< HEAD
+=======
+    def levelRender(self):
+>>>>>>> progress
+=======
+>>>>>>> e6ede2375ce2f4399636d4f15399ae2a31a14f98
         try:
             falltxt = displaylib.font(20, ("Fall: {0:.2f} m".format(self.fallLength)), [
                 255, 255, 255], False)
@@ -347,7 +409,14 @@ class level:
                 self.newchar.health)), [255, 255, 255], False)
             posText = displaylib.font(
                 20, ("Position: {0:.2f} m".format(self.newchar.position)), [255, 255, 255], False)
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
             progText = displaylib.font(25, ("Progress: {0:.1f} %".format(self.progress.getProgress())), [255,255,255], False)
+>>>>>>> progress
+=======
+            progText = displaylib.font(25, ("Progress: {0:.1f} %".format(self.progress.getProgress())), [255,255,255], False)
+>>>>>>> e6ede2375ce2f4399636d4f15399ae2a31a14f98
         except:
             posText = displaylib.font(
                 20, "Position: 0 m", [255, 255, 255], False)
@@ -355,6 +424,20 @@ class level:
                 20, "Fall: 0 m", [255, 255, 255], False)
             healthtxt = displaylib.font(
                 20, "Health: 100", [255, 255, 255], False)
+<<<<<<< HEAD
+<<<<<<< HEAD
+
+=======
+            progText = displaylib.font(25, "Progress: 0.0 %", [255, 255, 255], False)
+>>>>>>> e6ede2375ce2f4399636d4f15399ae2a31a14f98
+
+        self.game._display_surf.fill([0, 0, 0])
+
+<<<<<<< HEAD
+
+        self.game._display_surf.blit(posText.text_surf, ((
+                self.game.windowSize[0] - self.levelMount.images[0].w()), 0))
+=======
             progText = displaylib.font(25, "Progress: 0.0 %", [255, 255, 255], False)
 
         self.game._display_surf.fill([0, 0, 0])
@@ -363,11 +446,21 @@ class level:
 
         self.game._display_surf.blit(posText.text_surf, ((
             self.game.windowSize[0] - self.levelMount.images[0].w()), 0))
+>>>>>>> progress
+=======
+        self.game._display_surf.blit(posText.text_surf, ((
+            self.game.windowSize[0] - self.levelMount.images[0].w()), 0))
+>>>>>>> e6ede2375ce2f4399636d4f15399ae2a31a14f98
         self.game._display_surf.blit(falltxt.text_surf, ((
             self.game.windowSize[0] - self.levelMount.images[0].w()), 20))
         self.game._display_surf.blit(healthtxt.text_surf, ((
             self.game.windowSize[0] - self.levelMount.images[0].w()), 40))
+<<<<<<< HEAD
+<<<<<<< HEAD
+
+=======
         self.game._display_surf.blit(progText.text_surf, ((self.game.windowSize[0] - self.levelMount.images[0].w()), 680))
+>>>>>>> e6ede2375ce2f4399636d4f15399ae2a31a14f98
         if(self.walkswitch == self.prevwalkswitch):
             self.game._display_surf.blit(self.levelMount.images[0]._image_surf, (int(
                         self.game.windowSize[0]/2 - self.levelMount.images[0].w()/2), 0))
@@ -380,31 +473,70 @@ class level:
                             self.game.windowSize[0]/2 - self.levelMount.images[0].w()/2), 0))
                 self.walksequence[self.walkswitch].renderAnim(i)
                 pygame.display.update()
+<<<<<<< HEAD
+            
+=======
+        self.game._display_surf.blit(self.newchar.images[self.walkswitch]._image_surf, (
+            self.game.windowSize[0]/2 - (self.levelMount.images[0].w()/4), 2*self.game.windowSize[1]/3))
+        self.game._display_surf.blit(progText.text_surf, ((self.game.windowSize[0] - self.levelMount.images[0].w()), 680))
+        pygame.display.update()
+>>>>>>> progress
+=======
 
+>>>>>>> e6ede2375ce2f4399636d4f15399ae2a31a14f98
 
     def run_level(self, select):
         self.game.onHomeScreen = False
         self.play = True
         self.levelMount = self.mounts[select]
         self.newchar.setPosition(0)
+<<<<<<< HEAD
+<<<<<<< HEAD
+
+        ev = eventhandle.CEvent()
+        self.walkswitch = 0
+        self.prevwalkswitch = self.walkswitch
+=======
+        self.progress = Progress(self.levelMount, self.newchar)
+        self.progress.on_init()
+        ev = eventhandle.CEvent()
+        self.walkswitch = 0
+>>>>>>> progress
+=======
         ev = eventhandle.CEvent()
         self.walkswitch = 0
         self.prevwalkswitch = self.walkswitch
         self.progress = Progress(self.levelMount, self.newchar)
         self.progress.on_init()
+>>>>>>> e6ede2375ce2f4399636d4f15399ae2a31a14f98
         self.fallLength = None
         self.clock.tick_busy_loop()
         while self.play:
             while not self.dead:
                 if(self.newchar.position >= self.levelMount.routeLength):
                     self.success(ev, self.levelMount)
-                    self.rest(ev, self.newchar, self.levelMount)
+<<<<<<< HEAD
+<<<<<<< HEAD
                     break
                 else:
                     self.levelRender()
                     self.prevwalkswitch = self.walkswitch
                     for event in pygame.event.get():
+                        i = ev.on_event(event, self.game, self.newchar, self)
+=======
+                    self.rest(ev, self.newchar)
+=======
+                    self.rest(ev, self.newchar, self.levelMount)
+>>>>>>> e6ede2375ce2f4399636d4f15399ae2a31a14f98
+                    break
+                else:
+                    self.levelRender()
+                    for event in pygame.event.get():
                         i = ev.on_event(event, self.game, self.newchar, self, self.progress)
+<<<<<<< HEAD
+>>>>>>> progress
+=======
+>>>>>>> e6ede2375ce2f4399636d4f15399ae2a31a14f98
                         if(self.dead == True):
                             break
                         if(i != None):
