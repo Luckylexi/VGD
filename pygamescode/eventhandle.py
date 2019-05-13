@@ -2,13 +2,7 @@ import pygame
 import random
 import AscensionLib
 import Ascension
-
-<<<<<<< HEAD
-
-from AsscensionLib import *
-=======
 from AscensionLib import *
->>>>>>> master
 from pygame.locals import *
 
 
@@ -126,16 +120,8 @@ class CEvent:
             self.on_key_up(event)
 
         elif event.type == KEYDOWN:
-<<<<<<< HEAD
-		       i = self.on_key_down(event, game, char, level)
+		       i = self.on_key_down(event, game, level)
 		       return i
-=======
-            if(level != None):
-                i = self.on_key_down(event, game, level, level.newchar, level.progress)
-                return i
-            else:
-                self.on_key_down(event, game, None, None, None)
->>>>>>> master
 
         elif event.type == ACTIVEEVENT:
             if event.state == 1:
