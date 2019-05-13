@@ -316,7 +316,7 @@ class level:
 
     def rest(self, ev, climber, mount):
         restpath = displaylib.getpath("../Assets", "resting.png")
-        restimage = displaylib.image(restpath)
+        restimage = displaylib.image(restpath, 0)
         mnttxt = displaylib.font(20, "Resting on " + mount.name, (255, 255, 255), True)
 
 
@@ -325,7 +325,7 @@ class level:
 
         while(self.isResting):
             for event in pygame.event.get():
-                ev.on_event(event, self.game, self.newchar, self, self.progress)
+                ev.on_event(event, self.game, self)
                 if(climber.getHealth() >= 100):
                     print("Climber's Health is already at Max ")
                     climber.setHealth(100)
@@ -340,7 +340,7 @@ class level:
                         self.game._display_surf.blit(restimage._image_surf, (0, 0))
                         self.game._display_surf.blit(mnttxt.text_surf,
                         ((self.game.windowSize[0]/2 - mnttxt.text_surf.get_width()), self.game.windowSize[1]/2))
-                        self.game._display_surf.blit(resttxt.text_surf, ((self.game.windowSize[0] - self.levelMount.images[0].w(), 0)))
+                        self.game._display_surf.blit(resttxt.text_surf, ((self.game.windowSize[0], 0)))
                         pygame.display.update()
                         pygame.time.delay(1200)
                         self.resnum = self.progress.calcRestProg(climber)
