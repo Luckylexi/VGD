@@ -1,10 +1,14 @@
 import pygame
 import random
-import AsscensionLib
+import AscensionLib
 import Ascension
 
+<<<<<<< HEAD
 
 from AsscensionLib import *
+=======
+from AscensionLib import *
+>>>>>>> master
 from pygame.locals import *
 
 
@@ -18,7 +22,7 @@ class CEvent:
     def on_input_blur(self):
         pass
 
-    def on_key_down(self, event, game, char, level):
+    def on_key_down(self, event, game, level, char, prog):
         #keys = [pygame.K_KP_ENTER]
         if event.key == pygame.K_SPACE:
             if(level != None):
@@ -31,23 +35,38 @@ class CEvent:
                         level.walkswitch = 0
                     char.setPosition(
                         (char.getPosition()+(level.levelMount.routeLength/10)))
+                    prog.calcProg(char, level.levelMount)
                     return random.randint(0, 100)
+        elif event.key == pygame.K_h:
+            #try:
+            if(level.play == False):
+                if(level.isResting == True):
+                    print("pressed H, char is under 100 HP")
+                    level.rest(self, char, level.levelMount)
+                            #char.setHealth(prog.calcRestProg(char)) # +5 Hp
+                            #prog.calcRestProg(char)
+                            #print("Called h event, char HP over 100")
+
+            #except:
+        #        print("Cannot heal, currently on a mountain..")
         elif event.key == pygame.K_RETURN:
             if(level != None):
-                if(level.play == True):
-                    if(level.dead == True):
-                        game.onHomescreen = True
-                        game.on_render()
+                if(level.dead == True):
+                    game.onHomeScreen = True
+                    game.openingMusic.play()
+                    game.on_render()
                 elif(level.win == True):
                     game.onHomeScreen = True
+                    game.openingMusic.play()
                     game.on_render()
             else:
                 print ("got here")
                 self.beginner = AsscensionLib.level("beginning")
             if(game.onHomeScreen == True):
                 print("got here")
-                self.beginner = AsscensionLib.level("beginning")
-                self.beginner.on_init(game)
+                game.openingMusic.stop()
+                self.beginner = AscensionLib.level("beginning", game)
+                self.beginner.on_init()
                 game.onHomeScreen = False
                 self.beginner.run_level(0)
             else:
@@ -69,7 +88,7 @@ class CEvent:
     def on_restore(self):
         pass
 
-    def on_resize(self, event, level, game):
+    def on_resize(self, event, game, level):
         game._display_surf = pygame.display.set_mode(
             event.dict['size'], pygame.HWSURFACE | pygame.DOUBLEBUF | pygame.RESIZABLE)
         game.windowSize = event.dict['size']
@@ -90,7 +109,7 @@ class CEvent:
     def on_user(self, event):
         pass
 
-    def on_event(self, event, game, char, level):
+    def on_event(self, event, game, level):
         if event.type == QUIT:
             self.on_exit(game, level)
 
@@ -101,14 +120,22 @@ class CEvent:
             self.on_expose()
 
         elif event.type == VIDEORESIZE:
-            self.on_resize(event, level, game)
+            self.on_resize(event, game, level)
 
         elif event.type == KEYUP:
             self.on_key_up(event)
 
         elif event.type == KEYDOWN:
+<<<<<<< HEAD
 		       i = self.on_key_down(event, game, char, level)
 		       return i
+=======
+            if(level != None):
+                i = self.on_key_down(event, game, level, level.newchar, level.progress)
+                return i
+            else:
+                self.on_key_down(event, game, None, None, None)
+>>>>>>> master
 
         elif event.type == ACTIVEEVENT:
             if event.state == 1:
