@@ -28,7 +28,7 @@ class Game:
         self.windowSize = [
             self._display_surf.get_width(), self._display_surf.get_height()]
         self._running = True
-        self.openingMusic = displaylib.music(displaylib.getpath("../assets","tobias_weber_-_Between_Worlds_(Instrumental).mp3"))
+        self.openingMusic = displaylib.music(displaylib.getpath("../Assets","tobias_weber_-_Between_Worlds_(Instrumental).mp3"))
         self.openingScreen = displaylib.image("ascensionopenscreen.png", 0)
         self.Ascensiontitletext = displaylib.font(
             75, "Ascension", (0, 0, 0), False)

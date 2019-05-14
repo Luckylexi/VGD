@@ -318,29 +318,29 @@ class level:
         restpath = displaylib.getpath("../Assets", "resting.png")
         restimage = displaylib.image(restpath, 0)
         mnttxt = displaylib.font(20, "Resting on " + mount.name, (255, 255, 255), True)
-
-
         self.isResting = True
-        #try:
+        w = (self.game.windowSize[1]/restimage.h() * 1.5) * restimage.w()
+        restimage._image_surf = pygame.transform.scale(
+            restimage._image_surf, (int(w), int(self.game.windowSize[1] *.9)))
 
         while(self.isResting):
             for event in pygame.event.get():
                 ev.on_event(event, self.game, self)
                 if(climber.getHealth() >= 100):
+                    resttxt = displaylib.font(20, "Your health is full", (255,255,255), True)
                     print("Climber's Health is already at Max ")
                     climber.setHealth(100)
+                    self.game._display_surf.blit(resttxt.text_surf, ((self.game.windowSize[0] *3), 0))
+                    pygame.display.update()
                     self.isResting = False
                 else:
                     while(climber.getHealth() < 100):
                         resttxt = displaylib.font(20, "Your Health... " + str(climber.getHealth()), (255,255,255), True)
                         self.game._display_surf.fill([0, 0, 0])
-                        w = (self.game.windowSize[1]/restimage.h() * 0.9) * restimage.w()
-                        restimage._image_surf = pygame.transform.scale(
-                            restimage._image_surf, (int(w), int(self.game.windowSize[1] * .9)))
-                        self.game._display_surf.blit(restimage._image_surf, ((self.game.windowSize[0]/2 - restimage.w()/2), self.game.windowSize[1]*.05))
+                        self.game._display_surf.blit(restimage._image_surf, (300, 100))
                         self.game._display_surf.blit(mnttxt.text_surf,
-                        ((self.game.windowSize[0]/2 + restimage.w()/2), 0))
-                        self.game._display_surf.blit(resttxt.text_surf, ((self.game.windowSize[0]/2 - restimage.w()/2), 0))
+                        ((self.game.windowSize[0]/2 - mnttxt.text_surf.get_width()), self.game.windowSize[1]/2))
+                        self.game._display_surf.blit(resttxt.text_surf, ((self.game.windowSize[0] * .2), 0))
                         pygame.display.update()
                         pygame.time.delay(1200)
                         self.resnum = self.progress.calcRestProg(climber)
