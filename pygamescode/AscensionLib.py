@@ -252,8 +252,8 @@ class level:
             self.walksequence.append(displaylib.animation(self.game, self, [self.newchar.images[0], self.newchar.images[1], self.newchar.images[2], self.newchar.images[3]],0.1))
             self.walksequence.append(displaylib.animation(self.game, self, [self.newchar.images[4], self.newchar.images[5], self.newchar.images[6]],0.1))
         except:
-            self.walksequence.append(displaylib.image(displaylib.getpath("../Assets","leftfoot.png")))
-            self.walksequence.append(displaylib.image(displaylib.getpath("../Assets","rightfoot.png")))
+            self.walksequence.append(displaylib.image(displaylib.getpath("../Assets","leftfoot.png")),0)
+            self.walksequence.append(displaylib.image(displaylib.getpath("../Assets","rightfoot.png")),0)
 
         try:
             Ws = []
@@ -316,16 +316,16 @@ class level:
 
     def rest(self, ev, climber, mount):
         restpath = displaylib.getpath("../Assets", "resting.png")
-        restimage = displaylib.image(restpath)
+        restimage = displaylib.image(restpath, 0)
         mnttxt = displaylib.font(20, "Resting on " + mount.name, (255, 255, 255), True)
 
 
         self.isResting = True
-    #try:
+        #try:
 
         while(self.isResting):
             for event in pygame.event.get():
-                ev.on_event(event, self.game, self.newchar, self, self.progress)
+                ev.on_event(event, self.game, self)
                 if(climber.getHealth() >= 100):
                     print("Climber's Health is already at Max ")
                     climber.setHealth(100)
@@ -337,19 +337,18 @@ class level:
                         w = (self.game.windowSize[1]/restimage.h() * 0.9) * restimage.w()
                         restimage._image_surf = pygame.transform.scale(
                             restimage._image_surf, (int(w), int(self.game.windowSize[1] * .9)))
-                        self.game._display_surf.blit(restimage._image_surf, (0, 0))
+                        self.game._display_surf.blit(restimage._image_surf, ((self.game.windowSize[0]/2 - restimage.w()/2), self.game.windowSize[1]*.05))
                         self.game._display_surf.blit(mnttxt.text_surf,
-                        ((self.game.windowSize[0]/2 - mnttxt.text_surf.get_width()), self.game.windowSize[1]/2))
-                        self.game._display_surf.blit(resttxt.text_surf, ((self.game.windowSize[0] - self.levelMount.images[0].w(), 0)))
+                        ((self.game.windowSize[0]/2 + restimage.w()/2), 0))
+                        self.game._display_surf.blit(resttxt.text_surf, ((self.game.windowSize[0]/2 - restimage.w()/2), 0))
                         pygame.display.update()
                         pygame.time.delay(1200)
                         self.resnum = self.progress.calcRestProg(climber)
                         print("Resting Players Health... " + str(self.resnum))
                         #print("Resting time passed... " + str(self.clock.get_time()))
                         climber.setHealth(self.resnum)
-#except:
-    #    print("unable to calculate resting progress.. " + pygame.get_error())
-
+        #except:
+            #    print("unable to calculate resting progress.. " + pygame.get_error())
 
     def research(self):
         pass
