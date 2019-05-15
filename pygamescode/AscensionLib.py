@@ -340,10 +340,9 @@ class level:
                     while(climber.getHealth() < 100):
                         resttxt = displaylib.font(20, "Your Health... " + str(climber.getHealth()), (255,255,255), True)
                         self.game._display_surf.fill([0, 0, 0])
-                        self.game._display_surf.blit(restimage._image_surf, (300, 100))
-                        self.game._display_surf.blit(mnttxt.text_surf,
-                        ((self.game.windowSize[0]/2 - mnttxt.text_surf.get_width()), self.game.windowSize[1]/2))
-                        self.game._display_surf.blit(resttxt.text_surf, ((self.game.windowSize[0] * .2), 0))
+                        self.game._display_surf.blit(restimage._image_surf, (self.game.windowSize[0]/2 - restimage.w()/2, self.game.windowSize[1] * .05))
+                        self.game._display_surf.blit(mnttxt.text_surf,((self.game.windowSize[0]/2 - (restimage.w()/2), 0)))
+                        self.game._display_surf.blit(resttxt.text_surf, ((self.game.windowSize[0]/2 - (restimage.w()/2 - mnttxt.text_surf.get_width() - resttxt.text_surf.get_width()/2), 0)))
                         pygame.display.update()
                         pygame.time.delay(1200)
                         self.resnum = self.progress.calcRestProg(climber)
