@@ -1,5 +1,5 @@
 ('C:\\Users\\Carrie Hessel\\Documents\\School\\Computer Science\\CSCI '
- '345\\VGD\\pygamescode\\dist\\Ascension.exe',
+ '345\\Ascension\\VGD\\pygamescode\\dist\\Ascension.exe',
  True,
  False,
  False,
@@ -12,7 +12,7 @@
  'Ascension.pkg',
  [('PYZ-00.pyz',
    'C:\\Users\\Carrie Hessel\\Documents\\School\\Computer Science\\CSCI '
-   '345\\VGD\\pygamescode\\build\\Ascension\\PYZ-00.pyz',
+   '345\\Ascension\\VGD\\pygamescode\\build\\Ascension\\PYZ-00.pyz',
    'PYZ'),
   ('struct',
    'c:\\users\\carrie '
@@ -44,15 +44,15 @@
    'PYSOURCE'),
   ('Ascension',
    'C:\\Users\\Carrie Hessel\\Documents\\School\\Computer Science\\CSCI '
-   '345\\VGD\\pygamescode\\Ascension.py',
+   '345\\Ascension\\VGD\\pygamescode\\Ascension.py',
    'PYSOURCE'),
-  ('python37.dll',
-   'c:\\users\\carrie '
-   'hessel\\appdata\\local\\programs\\python\\python37\\python37.dll',
-   'BINARY'),
   ('VCRUNTIME140.dll',
    'c:\\users\\carrie '
    'hessel\\appdata\\local\\programs\\python\\python37\\VCRUNTIME140.dll',
+   'BINARY'),
+  ('python37.dll',
+   'c:\\users\\carrie '
+   'hessel\\appdata\\local\\programs\\python\\python37\\python37.dll',
    'BINARY'),
   ('pywintypes37.dll',
    'c:\\users\\carrie '
@@ -94,10 +94,6 @@
    'c:\\users\\carrie '
    'hessel\\appdata\\local\\programs\\python\\python37\\DLLs\\_ssl.pyd',
    'EXTENSION'),
-  ('unicodedata',
-   'c:\\users\\carrie '
-   'hessel\\appdata\\local\\programs\\python\\python37\\DLLs\\unicodedata.pyd',
-   'EXTENSION'),
   ('pyexpat',
    'c:\\users\\carrie '
    'hessel\\appdata\\local\\programs\\python\\python37\\DLLs\\pyexpat.pyd',
@@ -106,14 +102,6 @@
    'c:\\users\\carrie '
    'hessel\\appdata\\local\\programs\\python\\python37\\DLLs\\_hashlib.pyd',
    'EXTENSION'),
-  ('select',
-   'c:\\users\\carrie '
-   'hessel\\appdata\\local\\programs\\python\\python37\\DLLs\\select.pyd',
-   'EXTENSION'),
-  ('_bz2',
-   'c:\\users\\carrie '
-   'hessel\\appdata\\local\\programs\\python\\python37\\DLLs\\_bz2.pyd',
-   'EXTENSION'),
   ('_lzma',
    'c:\\users\\carrie '
    'hessel\\appdata\\local\\programs\\python\\python37\\DLLs\\_lzma.pyd',
@@ -121,6 +109,18 @@
   ('_socket',
    'c:\\users\\carrie '
    'hessel\\appdata\\local\\programs\\python\\python37\\DLLs\\_socket.pyd',
+   'EXTENSION'),
+  ('unicodedata',
+   'c:\\users\\carrie '
+   'hessel\\appdata\\local\\programs\\python\\python37\\DLLs\\unicodedata.pyd',
+   'EXTENSION'),
+  ('select',
+   'c:\\users\\carrie '
+   'hessel\\appdata\\local\\programs\\python\\python37\\DLLs\\select.pyd',
+   'EXTENSION'),
+  ('_bz2',
+   'c:\\users\\carrie '
+   'hessel\\appdata\\local\\programs\\python\\python37\\DLLs\\_bz2.pyd',
    'EXTENSION'),
   ('win32gui',
    'c:\\users\\carrie '
@@ -254,21 +254,21 @@
    'c:\\users\\carrie '
    'hessel\\appdata\\local\\programs\\python\\python37\\lib\\site-packages\\Pythonwin\\mfc140u.dll',
    'BINARY'),
-  ('libssl-1_1-x64.dll',
-   'c:\\users\\carrie '
-   'hessel\\appdata\\local\\programs\\python\\python37\\DLLs\\libssl-1_1-x64.dll',
-   'BINARY'),
   ('libcrypto-1_1-x64.dll',
    'c:\\users\\carrie '
    'hessel\\appdata\\local\\programs\\python\\python37\\DLLs\\libcrypto-1_1-x64.dll',
    'BINARY'),
-  ('libpng16-16.dll',
-   'C:\\Users\\Carrie '
-   'Hessel\\AppData\\Roaming\\Python\\Python37\\site-packages\\pygame\\libpng16-16.dll',
+  ('libssl-1_1-x64.dll',
+   'c:\\users\\carrie '
+   'hessel\\appdata\\local\\programs\\python\\python37\\DLLs\\libssl-1_1-x64.dll',
    'BINARY'),
   ('SDL_image.dll',
    'C:\\Users\\Carrie '
    'Hessel\\AppData\\Roaming\\Python\\Python37\\site-packages\\pygame\\SDL_image.dll',
+   'BINARY'),
+  ('libpng16-16.dll',
+   'C:\\Users\\Carrie '
+   'Hessel\\AppData\\Roaming\\Python\\Python37\\site-packages\\pygame\\libpng16-16.dll',
    'BINARY'),
   ('SDL.dll',
    'C:\\Users\\Carrie '
@@ -290,33 +290,33 @@
    'C:\\Users\\Carrie '
    'Hessel\\AppData\\Roaming\\Python\\Python37\\site-packages\\pygame\\libfreetype-6.dll',
    'BINARY'),
-  ('zlib1.dll',
+  ('libwebp-5.dll',
    'C:\\Users\\Carrie '
-   'Hessel\\AppData\\Roaming\\Python\\Python37\\site-packages\\pygame\\zlib1.dll',
+   'Hessel\\AppData\\Roaming\\Python\\Python37\\site-packages\\pygame\\libwebp-5.dll',
    'BINARY'),
   ('libtiff-5.dll',
    'C:\\Users\\Carrie '
    'Hessel\\AppData\\Roaming\\Python\\Python37\\site-packages\\pygame\\libtiff-5.dll',
    'BINARY'),
-  ('libwebp-5.dll',
+  ('zlib1.dll',
    'C:\\Users\\Carrie '
-   'Hessel\\AppData\\Roaming\\Python\\Python37\\site-packages\\pygame\\libwebp-5.dll',
-   'BINARY'),
-  ('libvorbisfile-3.dll',
-   'C:\\Users\\Carrie '
-   'Hessel\\AppData\\Roaming\\Python\\Python37\\site-packages\\pygame\\libvorbisfile-3.dll',
+   'Hessel\\AppData\\Roaming\\Python\\Python37\\site-packages\\pygame\\zlib1.dll',
    'BINARY'),
   ('libmpg123-0.dll',
    'C:\\Users\\Carrie '
    'Hessel\\AppData\\Roaming\\Python\\Python37\\site-packages\\pygame\\libmpg123-0.dll',
    'BINARY'),
-  ('libogg-0.dll',
+  ('libvorbisfile-3.dll',
    'C:\\Users\\Carrie '
-   'Hessel\\AppData\\Roaming\\Python\\Python37\\site-packages\\pygame\\libogg-0.dll',
+   'Hessel\\AppData\\Roaming\\Python\\Python37\\site-packages\\pygame\\libvorbisfile-3.dll',
    'BINARY'),
   ('libvorbis-0.dll',
    'C:\\Users\\Carrie '
    'Hessel\\AppData\\Roaming\\Python\\Python37\\site-packages\\pygame\\libvorbis-0.dll',
+   'BINARY'),
+  ('libogg-0.dll',
+   'C:\\Users\\Carrie '
+   'Hessel\\AppData\\Roaming\\Python\\Python37\\site-packages\\pygame\\libogg-0.dll',
    'BINARY'),
   ('Assets\\ascensionopenscreen.png',
    'Assets\\ascensionopenscreen.png',
@@ -413,7 +413,7 @@
    'DATA'),
   ('base_library.zip',
    'C:\\Users\\Carrie Hessel\\Documents\\School\\Computer Science\\CSCI '
-   '345\\VGD\\pygamescode\\build\\Ascension\\base_library.zip',
+   '345\\Ascension\\VGD\\pygamescode\\build\\Ascension\\base_library.zip',
    'DATA'),
   ('Include\\pyconfig.h',
    'c:\\users\\carrie '
@@ -421,13 +421,13 @@
    'DATA'),
   ('Ascension.exe.manifest',
    'C:\\Users\\Carrie Hessel\\Documents\\School\\Computer Science\\CSCI '
-   '345\\VGD\\pygamescode\\build\\Ascension\\Ascension.exe.manifest',
+   '345\\Ascension\\VGD\\pygamescode\\build\\Ascension\\Ascension.exe.manifest',
    'BINARY'),
   ('pyi-windows-manifest-filename Ascension.exe.manifest', '', 'OPTION')],
  [],
  False,
  False,
- 1557872755,
+ 1557885589,
  [('run.exe',
    'c:\\users\\carrie '
    'hessel\\appdata\\local\\programs\\python\\python37\\lib\\site-packages\\PyInstaller\\bootloader\\Windows-64bit\\run.exe',

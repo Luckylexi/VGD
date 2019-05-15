@@ -1,5 +1,5 @@
 ('C:\\Users\\Carrie Hessel\\Documents\\School\\Computer Science\\CSCI '
- '345\\VGD\\pygamescode\\build\\Ascension\\PYZ-00.pyz',
+ '345\\Ascension\\VGD\\pygamescode\\build\\Ascension\\PYZ-00.pyz',
  [('win32com',
    'c:\\users\\carrie '
    'hessel\\appdata\\local\\programs\\python\\python37\\lib\\site-packages\\win32com\\__init__.py',
@@ -156,25 +156,9 @@
    'c:\\users\\carrie '
    'hessel\\appdata\\local\\programs\\python\\python37\\lib\\site-packages\\pkg_resources\\__init__.py',
    'PYMODULE'),
-  ('pkg_resources._vendor.packaging.markers',
-   'c:\\users\\carrie '
-   'hessel\\appdata\\local\\programs\\python\\python37\\lib\\site-packages\\pkg_resources\\_vendor\\packaging\\markers.py',
-   'PYMODULE'),
-  ('pkg_resources._vendor.six',
-   'c:\\users\\carrie '
-   'hessel\\appdata\\local\\programs\\python\\python37\\lib\\site-packages\\pkg_resources\\_vendor\\six.py',
-   'PYMODULE'),
   ('pkg_resources._vendor.packaging.utils',
    'c:\\users\\carrie '
    'hessel\\appdata\\local\\programs\\python\\python37\\lib\\site-packages\\pkg_resources\\_vendor\\packaging\\utils.py',
-   'PYMODULE'),
-  ('pkg_resources._vendor.packaging.specifiers',
-   'c:\\users\\carrie '
-   'hessel\\appdata\\local\\programs\\python\\python37\\lib\\site-packages\\pkg_resources\\_vendor\\packaging\\specifiers.py',
-   'PYMODULE'),
-  ('pkg_resources._vendor.packaging.version',
-   'c:\\users\\carrie '
-   'hessel\\appdata\\local\\programs\\python\\python37\\lib\\site-packages\\pkg_resources\\_vendor\\packaging\\version.py',
    'PYMODULE'),
   ('pkg_resources._vendor.pyparsing',
    'c:\\users\\carrie '
@@ -220,13 +204,33 @@
    'c:\\users\\carrie '
    'hessel\\appdata\\local\\programs\\python\\python37\\lib\\ctypes\\_endian.py',
    'PYMODULE'),
-  ('pkg_resources._vendor.packaging',
-   'c:\\users\\carrie '
-   'hessel\\appdata\\local\\programs\\python\\python37\\lib\\site-packages\\pkg_resources\\_vendor\\packaging\\__init__.py',
-   'PYMODULE'),
   ('pkg_resources._vendor.packaging.requirements',
    'c:\\users\\carrie '
    'hessel\\appdata\\local\\programs\\python\\python37\\lib\\site-packages\\pkg_resources\\_vendor\\packaging\\requirements.py',
+   'PYMODULE'),
+  ('pkg_resources._vendor.packaging._compat',
+   'c:\\users\\carrie '
+   'hessel\\appdata\\local\\programs\\python\\python37\\lib\\site-packages\\pkg_resources\\_vendor\\packaging\\_compat.py',
+   'PYMODULE'),
+  ('pkg_resources._vendor.packaging._structures',
+   'c:\\users\\carrie '
+   'hessel\\appdata\\local\\programs\\python\\python37\\lib\\site-packages\\pkg_resources\\_vendor\\packaging\\_structures.py',
+   'PYMODULE'),
+  ('pkg_resources._vendor',
+   'c:\\users\\carrie '
+   'hessel\\appdata\\local\\programs\\python\\python37\\lib\\site-packages\\pkg_resources\\_vendor\\__init__.py',
+   'PYMODULE'),
+  ('pkg_resources._vendor.packaging.version',
+   'c:\\users\\carrie '
+   'hessel\\appdata\\local\\programs\\python\\python37\\lib\\site-packages\\pkg_resources\\_vendor\\packaging\\version.py',
+   'PYMODULE'),
+  ('pkg_resources._vendor.packaging.__about__',
+   'c:\\users\\carrie '
+   'hessel\\appdata\\local\\programs\\python\\python37\\lib\\site-packages\\pkg_resources\\_vendor\\packaging\\__about__.py',
+   'PYMODULE'),
+  ('pkg_resources._vendor.packaging.markers',
+   'c:\\users\\carrie '
+   'hessel\\appdata\\local\\programs\\python\\python37\\lib\\site-packages\\pkg_resources\\_vendor\\packaging\\markers.py',
    'PYMODULE'),
   ('pkg_resources._vendor.appdirs',
    'c:\\users\\carrie '
@@ -240,21 +244,17 @@
    'c:\\users\\carrie '
    'hessel\\appdata\\local\\programs\\python\\python37\\lib\\site-packages\\win32comext\\shell\\__init__.py',
    'PYMODULE'),
-  ('pkg_resources._vendor.packaging.__about__',
+  ('pkg_resources._vendor.packaging.specifiers',
    'c:\\users\\carrie '
-   'hessel\\appdata\\local\\programs\\python\\python37\\lib\\site-packages\\pkg_resources\\_vendor\\packaging\\__about__.py',
+   'hessel\\appdata\\local\\programs\\python\\python37\\lib\\site-packages\\pkg_resources\\_vendor\\packaging\\specifiers.py',
    'PYMODULE'),
-  ('pkg_resources._vendor',
+  ('pkg_resources._vendor.packaging',
    'c:\\users\\carrie '
-   'hessel\\appdata\\local\\programs\\python\\python37\\lib\\site-packages\\pkg_resources\\_vendor\\__init__.py',
+   'hessel\\appdata\\local\\programs\\python\\python37\\lib\\site-packages\\pkg_resources\\_vendor\\packaging\\__init__.py',
    'PYMODULE'),
-  ('pkg_resources._vendor.packaging._compat',
+  ('pkg_resources._vendor.six',
    'c:\\users\\carrie '
-   'hessel\\appdata\\local\\programs\\python\\python37\\lib\\site-packages\\pkg_resources\\_vendor\\packaging\\_compat.py',
-   'PYMODULE'),
-  ('pkg_resources._vendor.packaging._structures',
-   'c:\\users\\carrie '
-   'hessel\\appdata\\local\\programs\\python\\python37\\lib\\site-packages\\pkg_resources\\_vendor\\packaging\\_structures.py',
+   'hessel\\appdata\\local\\programs\\python\\python37\\lib\\site-packages\\pkg_resources\\_vendor\\six.py',
    'PYMODULE'),
   ('__main__',
    'C:\\Users\\Carrie '
@@ -704,13 +704,21 @@
    'c:\\users\\carrie '
    'hessel\\appdata\\local\\programs\\python\\python37\\lib\\datetime.py',
    'PYMODULE'),
-  ('tracemalloc',
+  ('_py_abc',
    'c:\\users\\carrie '
-   'hessel\\appdata\\local\\programs\\python\\python37\\lib\\tracemalloc.py',
+   'hessel\\appdata\\local\\programs\\python\\python37\\lib\\_py_abc.py',
    'PYMODULE'),
-  ('stringprep',
+  ('typing',
    'c:\\users\\carrie '
-   'hessel\\appdata\\local\\programs\\python\\python37\\lib\\stringprep.py',
+   'hessel\\appdata\\local\\programs\\python\\python37\\lib\\typing.py',
+   'PYMODULE'),
+  ('fnmatch',
+   'c:\\users\\carrie '
+   'hessel\\appdata\\local\\programs\\python\\python37\\lib\\fnmatch.py',
+   'PYMODULE'),
+  ('_compat_pickle',
+   'c:\\users\\carrie '
+   'hessel\\appdata\\local\\programs\\python\\python37\\lib\\_compat_pickle.py',
    'PYMODULE'),
   ('__future__',
    'c:\\users\\carrie '
@@ -828,10 +836,6 @@
    'c:\\users\\carrie '
    'hessel\\appdata\\local\\programs\\python\\python37\\lib\\tempfile.py',
    'PYMODULE'),
-  ('subprocess',
-   'c:\\users\\carrie '
-   'hessel\\appdata\\local\\programs\\python\\python37\\lib\\subprocess.py',
-   'PYMODULE'),
   ('tty',
    'c:\\users\\carrie '
    'hessel\\appdata\\local\\programs\\python\\python37\\lib\\tty.py',
@@ -884,10 +888,6 @@
    'c:\\users\\carrie '
    'hessel\\appdata\\local\\programs\\python\\python37\\lib\\uu.py',
    'PYMODULE'),
-  ('quopri',
-   'c:\\users\\carrie '
-   'hessel\\appdata\\local\\programs\\python\\python37\\lib\\quopri.py',
-   'PYMODULE'),
   ('email.feedparser',
    'c:\\users\\carrie '
    'hessel\\appdata\\local\\programs\\python\\python37\\lib\\email\\feedparser.py',
@@ -935,10 +935,6 @@
   ('email.charset',
    'c:\\users\\carrie '
    'hessel\\appdata\\local\\programs\\python\\python37\\lib\\email\\charset.py',
-   'PYMODULE'),
-  ('base64',
-   'c:\\users\\carrie '
-   'hessel\\appdata\\local\\programs\\python\\python37\\lib\\base64.py',
    'PYMODULE'),
   ('email._encoded_words',
    'c:\\users\\carrie '
@@ -988,17 +984,9 @@
    'c:\\users\\carrie '
    'hessel\\appdata\\local\\programs\\python\\python37\\lib\\email\\message.py',
    'PYMODULE'),
-  ('bz2',
-   'c:\\users\\carrie '
-   'hessel\\appdata\\local\\programs\\python\\python37\\lib\\bz2.py',
-   'PYMODULE'),
   ('lzma',
    'c:\\users\\carrie '
    'hessel\\appdata\\local\\programs\\python\\python37\\lib\\lzma.py',
-   'PYMODULE'),
-  ('_compression',
-   'c:\\users\\carrie '
-   'hessel\\appdata\\local\\programs\\python\\python37\\lib\\_compression.py',
    'PYMODULE'),
   ('gzip',
    'c:\\users\\carrie '
@@ -1020,10 +1008,6 @@
    'c:\\users\\carrie '
    'hessel\\appdata\\local\\programs\\python\\python37\\lib\\shutil.py',
    'PYMODULE'),
-  ('selectors',
-   'c:\\users\\carrie '
-   'hessel\\appdata\\local\\programs\\python\\python37\\lib\\selectors.py',
-   'PYMODULE'),
   ('socket',
    'c:\\users\\carrie '
    'hessel\\appdata\\local\\programs\\python\\python37\\lib\\socket.py',
@@ -1035,10 +1019,6 @@
   ('pydoc',
    'c:\\users\\carrie '
    'hessel\\appdata\\local\\programs\\python\\python37\\lib\\pydoc.py',
-   'PYMODULE'),
-  ('getopt',
-   'c:\\users\\carrie '
-   'hessel\\appdata\\local\\programs\\python\\python37\\lib\\getopt.py',
    'PYMODULE'),
   ('pdb',
    'c:\\users\\carrie '
@@ -1056,29 +1036,9 @@
    'c:\\users\\carrie '
    'hessel\\appdata\\local\\programs\\python\\python37\\lib\\string.py',
    'PYMODULE'),
-  ('_threading_local',
-   'c:\\users\\carrie '
-   'hessel\\appdata\\local\\programs\\python\\python37\\lib\\_threading_local.py',
-   'PYMODULE'),
-  ('threading',
-   'c:\\users\\carrie '
-   'hessel\\appdata\\local\\programs\\python\\python37\\lib\\threading.py',
-   'PYMODULE'),
-  ('_compat_pickle',
-   'c:\\users\\carrie '
-   'hessel\\appdata\\local\\programs\\python\\python37\\lib\\_compat_pickle.py',
-   'PYMODULE'),
-  ('pickle',
-   'c:\\users\\carrie '
-   'hessel\\appdata\\local\\programs\\python\\python37\\lib\\pickle.py',
-   'PYMODULE'),
   ('logging',
    'c:\\users\\carrie '
    'hessel\\appdata\\local\\programs\\python\\python37\\lib\\logging\\__init__.py',
-   'PYMODULE'),
-  ('pprint',
-   'c:\\users\\carrie '
-   'hessel\\appdata\\local\\programs\\python\\python37\\lib\\pprint.py',
    'PYMODULE'),
   ('unittest.case',
    'c:\\users\\carrie '
@@ -1087,22 +1047,6 @@
   ('unittest.suite',
    'c:\\users\\carrie '
    'hessel\\appdata\\local\\programs\\python\\python37\\lib\\unittest\\suite.py',
-   'PYMODULE'),
-  ('stat',
-   'c:\\users\\carrie '
-   'hessel\\appdata\\local\\programs\\python\\python37\\lib\\stat.py',
-   'PYMODULE'),
-  ('genericpath',
-   'c:\\users\\carrie '
-   'hessel\\appdata\\local\\programs\\python\\python37\\lib\\genericpath.py',
-   'PYMODULE'),
-  ('posixpath',
-   'c:\\users\\carrie '
-   'hessel\\appdata\\local\\programs\\python\\python37\\lib\\posixpath.py',
-   'PYMODULE'),
-  ('fnmatch',
-   'c:\\users\\carrie '
-   'hessel\\appdata\\local\\programs\\python\\python37\\lib\\fnmatch.py',
    'PYMODULE'),
   ('unittest.loader',
    'c:\\users\\carrie '
@@ -1116,10 +1060,6 @@
    'c:\\users\\carrie '
    'hessel\\appdata\\local\\programs\\python\\python37\\lib\\unittest\\main.py',
    'PYMODULE'),
-  ('signal',
-   'c:\\users\\carrie '
-   'hessel\\appdata\\local\\programs\\python\\python37\\lib\\signal.py',
-   'PYMODULE'),
   ('unittest.signals',
    'c:\\users\\carrie '
    'hessel\\appdata\\local\\programs\\python\\python37\\lib\\unittest\\signals.py',
@@ -1128,13 +1068,9 @@
    'c:\\users\\carrie '
    'hessel\\appdata\\local\\programs\\python\\python37\\lib\\unittest\\__init__.py',
    'PYMODULE'),
-  ('struct',
+  ('doctest',
    'c:\\users\\carrie '
-   'hessel\\appdata\\local\\programs\\python\\python37\\lib\\struct.py',
-   'PYMODULE'),
-  ('gettext',
-   'c:\\users\\carrie '
-   'hessel\\appdata\\local\\programs\\python\\python37\\lib\\gettext.py',
+   'hessel\\appdata\\local\\programs\\python\\python37\\lib\\doctest.py',
    'PYMODULE'),
   ('textwrap',
    'c:\\users\\carrie '
@@ -1144,25 +1080,89 @@
    'c:\\users\\carrie '
    'hessel\\appdata\\local\\programs\\python\\python37\\lib\\argparse.py',
    'PYMODULE'),
-  ('doctest',
+  ('pprint',
    'c:\\users\\carrie '
-   'hessel\\appdata\\local\\programs\\python\\python37\\lib\\doctest.py',
+   'hessel\\appdata\\local\\programs\\python\\python37\\lib\\pprint.py',
+   'PYMODULE'),
+  ('pickle',
+   'c:\\users\\carrie '
+   'hessel\\appdata\\local\\programs\\python\\python37\\lib\\pickle.py',
+   'PYMODULE'),
+  ('tracemalloc',
+   'c:\\users\\carrie '
+   'hessel\\appdata\\local\\programs\\python\\python37\\lib\\tracemalloc.py',
+   'PYMODULE'),
+  ('quopri',
+   'c:\\users\\carrie '
+   'hessel\\appdata\\local\\programs\\python\\python37\\lib\\quopri.py',
+   'PYMODULE'),
+  ('stringprep',
+   'c:\\users\\carrie '
+   'hessel\\appdata\\local\\programs\\python\\python37\\lib\\stringprep.py',
+   'PYMODULE'),
+  ('struct',
+   'c:\\users\\carrie '
+   'hessel\\appdata\\local\\programs\\python\\python37\\lib\\struct.py',
+   'PYMODULE'),
+  ('copy',
+   'c:\\users\\carrie '
+   'hessel\\appdata\\local\\programs\\python\\python37\\lib\\copy.py',
+   'PYMODULE'),
+  ('gettext',
+   'c:\\users\\carrie '
+   'hessel\\appdata\\local\\programs\\python\\python37\\lib\\gettext.py',
+   'PYMODULE'),
+  ('getopt',
+   'c:\\users\\carrie '
+   'hessel\\appdata\\local\\programs\\python\\python37\\lib\\getopt.py',
+   'PYMODULE'),
+  ('base64',
+   'c:\\users\\carrie '
+   'hessel\\appdata\\local\\programs\\python\\python37\\lib\\base64.py',
+   'PYMODULE'),
+  ('stat',
+   'c:\\users\\carrie '
+   'hessel\\appdata\\local\\programs\\python\\python37\\lib\\stat.py',
+   'PYMODULE'),
+  ('genericpath',
+   'c:\\users\\carrie '
+   'hessel\\appdata\\local\\programs\\python\\python37\\lib\\genericpath.py',
+   'PYMODULE'),
+  ('posixpath',
+   'c:\\users\\carrie '
+   'hessel\\appdata\\local\\programs\\python\\python37\\lib\\posixpath.py',
+   'PYMODULE'),
+  ('signal',
+   'c:\\users\\carrie '
+   'hessel\\appdata\\local\\programs\\python\\python37\\lib\\signal.py',
+   'PYMODULE'),
+  ('selectors',
+   'c:\\users\\carrie '
+   'hessel\\appdata\\local\\programs\\python\\python37\\lib\\selectors.py',
+   'PYMODULE'),
+  ('subprocess',
+   'c:\\users\\carrie '
+   'hessel\\appdata\\local\\programs\\python\\python37\\lib\\subprocess.py',
+   'PYMODULE'),
+  ('_compression',
+   'c:\\users\\carrie '
+   'hessel\\appdata\\local\\programs\\python\\python37\\lib\\_compression.py',
    'PYMODULE'),
   ('contextlib',
    'c:\\users\\carrie '
    'hessel\\appdata\\local\\programs\\python\\python37\\lib\\contextlib.py',
    'PYMODULE'),
-  ('typing',
+  ('_threading_local',
    'c:\\users\\carrie '
-   'hessel\\appdata\\local\\programs\\python\\python37\\lib\\typing.py',
+   'hessel\\appdata\\local\\programs\\python\\python37\\lib\\_threading_local.py',
    'PYMODULE'),
-  ('_py_abc',
+  ('threading',
    'c:\\users\\carrie '
-   'hessel\\appdata\\local\\programs\\python\\python37\\lib\\_py_abc.py',
+   'hessel\\appdata\\local\\programs\\python\\python37\\lib\\threading.py',
    'PYMODULE'),
-  ('copy',
+  ('bz2',
    'c:\\users\\carrie '
-   'hessel\\appdata\\local\\programs\\python\\python37\\lib\\copy.py',
+   'hessel\\appdata\\local\\programs\\python\\python37\\lib\\bz2.py',
    'PYMODULE'),
   ('win32con',
    'c:\\users\\carrie '
@@ -1170,7 +1170,7 @@
    'PYMODULE'),
   ('eventhandle',
    'C:\\Users\\Carrie Hessel\\Documents\\School\\Computer Science\\CSCI '
-   '345\\VGD\\pygamescode\\eventhandle.py',
+   '345\\Ascension\\VGD\\pygamescode\\eventhandle.py',
    'PYMODULE'),
   ('pygame.locals',
    'C:\\Users\\Carrie '
@@ -1178,15 +1178,15 @@
    'PYMODULE'),
   ('Ascension',
    'C:\\Users\\Carrie Hessel\\Documents\\School\\Computer Science\\CSCI '
-   '345\\VGD\\pygamescode\\Ascension.py',
+   '345\\Ascension\\VGD\\pygamescode\\Ascension.py',
    'PYMODULE'),
   ('displaylib',
    'C:\\Users\\Carrie Hessel\\Documents\\School\\Computer Science\\CSCI '
-   '345\\VGD\\pygamescode\\displaylib.py',
+   '345\\Ascension\\VGD\\pygamescode\\displaylib.py',
    'PYMODULE'),
   ('AscensionLib',
    'C:\\Users\\Carrie Hessel\\Documents\\School\\Computer Science\\CSCI '
-   '345\\VGD\\pygamescode\\AscensionLib.py',
+   '345\\Ascension\\VGD\\pygamescode\\AscensionLib.py',
    'PYMODULE'),
   ('random',
    'c:\\users\\carrie '
