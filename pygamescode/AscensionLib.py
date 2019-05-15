@@ -199,26 +199,20 @@ class Progress:
 class level:
     def __init__(self, name, game):
         self.clock = pygame.time.Clock()
-
         self.name = name
         self.mounts = []
         self.levelMount = None
-
         self.newchar = climber("climber.txt", game)
         self.newchar.on_init()
-
         self.dead = False
         self.win = False
         self.progress = None
         self.isResting = True
         self.resnum = 0
         self.game = game
-
         self.resear = []
         self.fallLength = None
-
         self.play = False
-
         self.moveSize = 1
         #self.hud = []
         self.walksequence = []
@@ -326,29 +320,29 @@ class level:
         while(self.isResting):
             for event in pygame.event.get():
                 ev.on_event(event, self.game, self)
-                if(climber.getHealth() >= 100):
-                    resttxt = displaylib.font(20, "Your health is full", (255,255,255), True)
-                    print("Climber's Health is already at Max ")
-                    climber.setHealth(100)
-                    self.game._display_surf.blit(resttxt.text_surf, ((self.game.windowSize[0] *3), 0))
-                    pygame.display.update()
-                    self.isResting = False
-                else:
-                    while(climber.getHealth() < 100):
-                        resttxt = displaylib.font(20, "Your Health... " + str(climber.getHealth()), (255,255,255), True)
-                        self.game._display_surf.fill([0, 0, 0])
-                        self.game._display_surf.blit(restimage._image_surf, (300, 100))
-                        self.game._display_surf.blit(mnttxt.text_surf,
-                        ((self.game.windowSize[0]/2 - mnttxt.text_surf.get_width()), self.game.windowSize[1]/2))
-                        self.game._display_surf.blit(resttxt.text_surf, ((self.game.windowSize[0] * .2), 0))
-                        pygame.display.update()
-                        pygame.time.delay(1200)
-                        self.resnum = self.progress.calcRestProg(climber)
-                        print("Resting Players Health... " + str(self.resnum))
-                        #print("Resting time passed... " + str(self.clock.get_time()))
-                        climber.setHealth(self.resnum)
-        #except:
-            #    print("unable to calculate resting progress.. " + pygame.get_error())
+    #    while(climber.getHealth() < 100):
+            resttxt = displaylib.font(20, "Your Health... " + str(climber.getHealth()), (255,255,255), True)
+            self.game._display_surf.fill([0, 0, 0])
+            self.game._display_surf.blit(restimage._image_surf, (300, 100))
+            self.game._display_surf.blit(mnttxt.text_surf,
+            ((self.game.windowSize[0] * .6), 0))
+            self.game._display_surf.blit(resttxt.text_surf, ((self.game.windowSize[0] * .2), 0))
+            pygame.display.update()
+            pygame.time.delay(1200)
+            self.resnum = self.progress.calcRestProg(climber)
+            print("Resting Players Health... " + str(self.resnum))
+
+            climber.setHealth(self.resnum)
+            if(climber.getHealth() >= 100):
+
+                fresttxt = displaylib.font(20, "Your health is full", (255,255,255), True)
+                print("Climber's Health is already at Max ")
+                climber.setHealth(100)
+                self.game._display_surf.fill([0,0,0])
+                self.game._display_surf.blit(fresttxt.text_surf, ((self.game.windowSize[0] *3), 0))
+                pygame.display.update()
+                self.isResting = False
+
 
     def research(self):
         pass
@@ -459,14 +453,11 @@ class level:
         self.moveSize = (self.levelMount.mountImages[self.levelMount.mountArea].h()/self.stepsize) * 100
         self.newchar.setPosition(0)
         self.screenpos = 0
-
         ev = eventhandle.CEvent()
         self.walkswitch = 0
         self.prevwalkswitch = self.walkswitch
-
         self.progress = Progress(self.levelMount, self.newchar)
         self.progress.on_init()
-
         self.fallLength = None
         self.clock.tick_busy_loop()
 

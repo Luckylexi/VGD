@@ -38,6 +38,8 @@ class CEvent:
                     if(level.isResting == True):
                         print("pressed H, char is under 100 HP")
                         level.rest(self, char, level.levelMount)
+                        #if(char.getHealth() >= 100):
+
                             #char.setHealth(prog.calcRestProg(char)) # +5 Hp
                             #prog.calcRestProg(char)
                             #print("Called h event, char HP over 100")
