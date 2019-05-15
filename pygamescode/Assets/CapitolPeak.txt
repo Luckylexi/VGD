@@ -1,0 +1,11 @@
+CapitolPeak/CapitolPeak.png
+CapitolPeak/CapitolPeak2.png
+CapitolPeak/CapitolPeak2.png
+CapitolPeak/path.png
+CapitolPeak/path2.png
+CapitolPeak/path2.png
+CapitolPeak/plant1.png
+CapitolPeak/plant2.png
+CapitolPeak/plant4.png
+CapitolPeak/sky.png
+CapitolPeak/hud.png

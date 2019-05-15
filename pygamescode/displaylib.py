@@ -7,8 +7,10 @@ from pygame.locals import *
 def getpath(path, filename):
     if(path != None):
         try:
-            os.chdir(path)
-            return os.path.join(os.getcwd(), filename)
+            try: st = sys._MEIPASS
+            except: st = os.path.abspath(".")
+            resourcepath = os.path.join(st, path)
+            return os.path.join(resourcepath, filename)
         except OSError as err:
             print("OS error: {0}".format(err))
     else:
@@ -77,7 +79,7 @@ class animation:
 
 class font:
     def __init__(self, size, textline, color, underline):
-        self.file = getpath("../Assets", "FrederickatheGreat-Regular.ttf")
+        self.file = getpath("Assets", "FrederickatheGreat-Regular.ttf")
         try:
             self.f = pygame.font.Font(self.file, size)
         except:

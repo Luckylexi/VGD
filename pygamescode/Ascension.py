@@ -5,7 +5,8 @@ import random
 import AscensionLib
 import displaylib
 import eventhandle
-
+if os.name == 'nt':
+    import win32gui, win32con
 
 class Game:
     def __init__(self):
@@ -22,14 +23,19 @@ class Game:
         self.onHomeScreen = True
         pygame.init()
         pygame.mixer.init()
+        
         pygame.display.set_caption("Ascension (demo)")
         self._display_surf = pygame.display.set_mode(
-            (1280, 720), pygame.HWSURFACE | pygame.DOUBLEBUF | pygame.RESIZABLE)
+            (1280, 720),  pygame.HWSURFACE | pygame.DOUBLEBUF | pygame.RESIZABLE)
+        if os.name == 'nt':
+            hwnd = win32gui.GetForegroundWindow()
+            win32gui.ShowWindow(hwnd, win32con.SW_MAXIMIZE)
         self.windowSize = [
             self._display_surf.get_width(), self._display_surf.get_height()]
         self._running = True
-        self.openingMusic = displaylib.music(displaylib.getpath("../Assets","tobias_weber_-_Between_Worlds_(Instrumental).mp3"))
-        self.openingScreen = displaylib.image("ascensionopenscreen.png", 0)
+        self.openingMusic = displaylib.music(displaylib.getpath("Assets","tobias_weber_-_Between_Worlds_(Instrumental).mp3"))
+        openPath = displaylib.getpath("Assets", "ascensionopenscreen.png")
+        self.openingScreen = displaylib.image(openPath, 0)
         self.Ascensiontitletext = displaylib.font(
             75, "Ascension", (0, 0, 0), False)
         self.startleveltext = displaylib.font(
@@ -44,13 +50,14 @@ class Game:
     def on_render(self):
         try:
             pygame.display.flip()
-            self.openingScreen._image_surf = pygame.transform.scale(
-                self.openingScreen._image_surf, (self.windowSize[0], self.windowSize[1]))
-            self._display_surf.blit(self.openingScreen._image_surf, (0, self.openingScreen.position))
+            w = (self.windowSize[1]/self.openingScreen.h()*.9) * self.openingScreen.w()
+            self.openingScreen.resizeSurf = self.openingScreen.resize(int(w),int(self.windowSize[1]))
+            self._display_surf.blit(self.openingScreen.resizeSurf, ((self.windowSize[0]/2 - self.openingScreen.resizeSurf.get_width()/2), self.openingScreen.position))
+            self._display_surf.get_width()
             self._display_surf.blit(
-                self.Ascensiontitletext.text_surf, (20, 20))
+                self.Ascensiontitletext.text_surf, ((self._display_surf.get_width()/2 - self.openingScreen.resizeSurf.get_width()/2 + 15), 20))
             self._display_surf.blit(self.startleveltext.text_surf,
-                                    (20, self.Ascensiontitletext.text_surf.get_height()+15))
+                                    ((self.windowSize[0]/2 -  self.openingScreen.resizeSurf.get_width()/2 + 15), self.Ascensiontitletext.text_surf.get_height()+15))
             pygame.display.flip()
         except:
             print(pygame.error())

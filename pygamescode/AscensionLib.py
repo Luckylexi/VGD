@@ -64,6 +64,7 @@ class Mountain:
         self.prevMountArea = 0
         self.mountArea = 0
         self.skyImage = None
+        self.hudImage = None
         self.mountImages = []
         self.pathImages = []
         self.renderOther = renderOther
@@ -72,11 +73,11 @@ class Mountain:
     def on_init(self, Game):
         try:
             fName = self.name.replace(" ", "")
-            path = displaylib.getpath("../Assets", (fName + ".txt"))
+            path = displaylib.getpath("Assets", (fName + ".txt"))
             with open(path, "r") as f:
                 for line in f:
                     line = line.strip('\n')
-                    path = displaylib.getpath("../Assets", line)
+                    path = displaylib.getpath("Assets", line)
                     nwIm = displaylib.image(path,0)
                     #nwIm._image_surf = pygame.transform.smoothscale(nwIm._image_surf, ((1366/2),768))
                     w = (Game.windowSize[1]/nwIm.h()*.9) * nwIm.w()
@@ -86,6 +87,8 @@ class Mountain:
                         self.pathImages.append(nwIm)
                     elif("sky" in path):
                         self.skyImage = nwIm
+                    elif("hud" in path):
+                        self.hudImage = nwIm
                     elif(("/" + self.name.replace(" ","")) in path):
                         self.mountImages.append(nwIm)
                     else:
@@ -117,7 +120,7 @@ class climber:
     def on_init(self):
         array = []
         try:
-            path = displaylib.getpath("../Assets", self.fileName)
+            path = displaylib.getpath("Assets", self.fileName)
             with open(os.path.join(path), "r") as self.fallLength:
 
                 for line in self.fallLength:
@@ -129,7 +132,7 @@ class climber:
         self.totalmetersclimbed = float(array[2])
         if (array != None):
             for i in array:
-                path = displaylib.getpath("../Assets", i)
+                path = displaylib.getpath("Assets", i)
                 nImage = displaylib.image(path, 0)
                 if (nImage._image_surf != None):
                     w = (self.game.windowSize[1]/nImage.h() *.9) * nImage.w()
@@ -220,7 +223,7 @@ class level:
         self.play = False
 
         self.moveSize = 1
-        #self.hud = []
+        self.hud = None
         self.walksequence = []
         self.walksounds = []
         self.others = []
@@ -228,7 +231,7 @@ class level:
     def on_init(self):
         try:
             levelList = []
-            path = displaylib.getpath("../Assets", "mountains.txt")
+            path = displaylib.getpath("Assets", "mountains.txt")
             with open(path, "r") as self.fallLength:
                 for line in self.fallLength:
                     levelList.append(line.rstrip('\n'))
@@ -252,12 +255,12 @@ class level:
             self.walksequence.append(displaylib.animation(self.game, self, [self.newchar.images[0], self.newchar.images[1], self.newchar.images[2], self.newchar.images[3]],0.1))
             self.walksequence.append(displaylib.animation(self.game, self, [self.newchar.images[4], self.newchar.images[5], self.newchar.images[6]],0.1))
         except:
-            self.walksequence.append(displaylib.image(displaylib.getpath("../Assets","leftfoot.png")),0)
-            self.walksequence.append(displaylib.image(displaylib.getpath("../Assets","rightfoot.png")),0)
+            self.walksequence.append(displaylib.image(displaylib.getpath("Assets","leftfoot.png"),0))
+            self.walksequence.append(displaylib.image(displaylib.getpath("Assets","rightfoot.png"),0))
 
         try:
             Ws = []
-            path = displaylib.getpath("../Assets", "walksounds.txt")
+            path = displaylib.getpath("Assets", "walksounds.txt")
             with open(path, "r") as f:
                 for line in f:
                     Ws.append(line.rstrip('\n'))
@@ -265,7 +268,7 @@ class level:
             print("could not load walking sounds")
 
         for i in Ws:
-            path = displaylib.getpath("../Assets", i)
+            path = displaylib.getpath("Assets", i)
             newSound = displaylib.sound(path)
             self.walksounds.append(newSound)
 
@@ -275,7 +278,7 @@ class level:
         self.win = True
         self.newchar.mountsClimbed += 1
         self.newchar.setPosition(0)
-        path = displaylib.getpath("../Assets", "success.png")
+        path = displaylib.getpath("Assets", "success.png")
         winim = displaylib.image(path,0)
         mounttext = displaylib.font(24, mount.name, (255, 255, 255), True)
         routetext = displaylib.font(
@@ -315,7 +318,7 @@ class level:
                 break
 
     def rest(self, ev, climber, mount):
-        restpath = displaylib.getpath("../Assets", "resting.png")
+        restpath = displaylib.getpath("Assets", "resting.png")
         restimage = displaylib.image(restpath, 0)
         mnttxt = displaylib.font(20, "Resting on " + mount.name, (255, 255, 255), True)
         self.isResting = True
@@ -377,7 +380,7 @@ class level:
             elif (i.position >= self.game.windowSize[1]-(self.game.windowSize[1]/4)):
                 self.others.remove(i)
 
-    def SceneRender(self, sky, other, oPos, path, mount, mountPos, resizeStep):
+    def SceneRender(self, hud, sky, other, oPos, path, mount, mountPos, resizeStep):
         self.game._display_surf.blit(sky._image_surf, ((self.game.windowSize[0]/2) - sky.w()/2, sky.position + self.game.windowSize[1]*.05))
         for p in path:
             self.game._display_surf.blit(p._image_surf, (self.game.windowSize[0]/2 - p.w()/2, p.position + self.game.windowSize[1]*.05))
@@ -391,31 +394,26 @@ class level:
                     o.resizeSurf = o.resize(int(o.w()*(resizeStep ** o.resizelevel)), int(o.h()*(resizeStep ** o.resizelevel)))
             self.game._display_surf.blit(o.resizeSurf, (self.game.windowSize[0]/2 - o.w()/2, o.position + self.game.windowSize[1]*.05))
             o.position += oPos
+        self.game._display_surf.blit(hud._image_surf, ((self.game.windowSize[0]/2 - hud.w()/2), hud.position + self.game.windowSize[1]*.05))
 
     def textRender(self):
+        maxtxt = displaylib.font(20, "99999m", [255,255,255],False)
         try:
-            falltxt = displaylib.font(20, ("Fall: {0:.2f} m".format(self.fallLength)), [
-                255, 255, 255], False)
-            healthtxt = displaylib.font(20, ("Health: {0}".format(
-                self.newchar.health)), [255, 255, 255], False)
-            posText = displaylib.font(
-                20, ("Position: {0:.2f} m".format(self.newchar.position)), [255, 255, 255], False)
-            progText = displaylib.font(25, ("Progress: {0:.1f} %".format(self.progress.getProgress())), [255,255,255], False)
+            falltxt = displaylib.font(20, ("{0:^5.0f}m".format(self.fallLength)), [255, 255, 255], False)
+            healthtxt = displaylib.font(20, ("{0:>3}".format(self.newchar.health)), [255, 255, 255], False)
+            posText = displaylib.font(20, ("{0:^5.0f}m".format(self.newchar.position)), [255, 255, 255], False)
+            progText = displaylib.font(25, ("Progress: {0:<7.0f} %".format(self.progress.getProgress())), [255,255,255], False)
         except:
-            posText = displaylib.font(
-                20, "Position: 0 m", [255, 255, 255], False)
-            falltxt = displaylib.font(
-                20, "Fall: 0 m", [255, 255, 255], False)
-            healthtxt = displaylib.font(
-                20, "Health: 100", [255, 255, 255], False)
+            posText = displaylib.font(20, ("{0:^5.0f}m".format(0)), [255, 255, 255], False)
+            falltxt = displaylib.font(20, ("{0:^5.0f}m".format(0)), [255, 255, 255], False)
+            healthtxt = displaylib.font(20, ("{0:>3}".format(100)), [255, 255, 255], False)
             progText = displaylib.font(25, "Progress: 0.0 %", [255, 255, 255], False)
 
-        self.game._display_surf.blit(posText.text_surf, ((
-                self.game.windowSize[0]/2), 0))
-        self.game._display_surf.blit(falltxt.text_surf, ((
-            self.game.windowSize[0]/2 ), 20))
-        self.game._display_surf.blit(healthtxt.text_surf, ((
-            self.game.windowSize[0]/2 ), 40))
+        w = self.game.windowSize[0]/2 - (self.levelMount.hudImage.w()/2)
+        h = (self.game.windowSize[1] * .05) + 20
+        self.game._display_surf.blit(posText.text_surf, ((w + self.levelMount.hudImage.w()/4 + maxtxt.text_surf.get_width()/3), h))
+        self.game._display_surf.blit(falltxt.text_surf, (( w + self.levelMount.hudImage.w()/2 + maxtxt.text_surf.get_width()/2), h))
+        self.game._display_surf.blit(healthtxt.text_surf, ((w + maxtxt.text_surf.get_width()/2), h))
         self.game._display_surf.blit(progText.text_surf, ((self.game.windowSize[0]/2), 680))
 
     def levelRender(self):
@@ -427,7 +425,7 @@ class level:
         covSurf1.fill([0,0,0])
         covSurf2.fill([0,0,0])
         if(self.walkswitch == self.prevwalkswitch):
-            self.SceneRender(self.levelMount.skyImage, self.others, 0 , [self.levelMount.pathImages[self.levelMount.mountArea]], [self.levelMount.mountImages[self.levelMount.mountArea]], 0 ,1 )
+            self.SceneRender(self.levelMount.hudImage, self.levelMount.skyImage, self.others, 0 , [self.levelMount.pathImages[self.levelMount.mountArea]], [self.levelMount.mountImages[self.levelMount.mountArea]], 0 ,1 )
             self.walksequence[self.walkswitch].lastImage()
             self.game._display_surf.blit(covSurf1, (0,0))
             self.game._display_surf.blit(covSurf1, (self.game.windowSize[0]/2 + self.levelMount.pathImages[self.levelMount.mountArea].w()/2,0))
@@ -441,9 +439,9 @@ class level:
                 self.objectSelect(False)
 
             self.walkSound.sound.play()
-            self.SceneRender(self.levelMount.skyImage, self.others, (self.moveSize*3) , [self.levelMount.pathImages[self.levelMount.mountArea]], [self.levelMount.mountImages[self.levelMount.mountArea]], (self.moveSize*.01) , 1.01 )
+            self.SceneRender(self.levelMount.hudImage, self.levelMount.skyImage, self.others, (self.moveSize*3) , [self.levelMount.pathImages[self.levelMount.mountArea]], [self.levelMount.mountImages[self.levelMount.mountArea]], (self.moveSize*.01) , 1.01 )
             for i in self.walksequence[self.walkswitch].sequence:
-                self.SceneRender(self.levelMount.skyImage, self.others, 0 , [self.levelMount.pathImages[self.levelMount.mountArea]], [self.levelMount.mountImages[self.levelMount.mountArea]], 0 ,1 )
+                self.SceneRender(self.levelMount.hudImage, self.levelMount.skyImage, self.others, 0 , [self.levelMount.pathImages[self.levelMount.mountArea]], [self.levelMount.mountImages[self.levelMount.mountArea]], 0 ,1 )
                 self.walksequence[self.walkswitch].renderAnim(i)
                 self.game._display_surf.blit(covSurf1, (0,0))
                 self.game._display_surf.blit(covSurf1, (self.game.windowSize[0]/2 + self.levelMount.pathImages[self.levelMount.mountArea].w()/2,0))

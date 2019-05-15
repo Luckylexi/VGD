@@ -1,2 +1,0 @@
-Capitol Peak; 4309; 0.80; 13679; 1(10461),2(805),4(2414); True, False, False
-Everest; 8848; 0.80; 4000; 4(4000); False

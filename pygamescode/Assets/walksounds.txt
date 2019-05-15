@@ -1,0 +1,2 @@
+Sounds/HeavySigh.wav
+Sounds/walk2.wav
