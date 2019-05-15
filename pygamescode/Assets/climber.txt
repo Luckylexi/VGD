@@ -1,0 +1,10 @@
+Lizzy
+0
+0
+Character/Lizzy1.png
+Character/Lizzy2.png
+Character/Lizzy3.png
+Character/Lizzy4.png
+Character/Lizzy5.png
+Character/Lizzy6.png
+Character/Lizzy7.png
